@@ -1,38 +1,23 @@
 package com.radek.travelplanet.model;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import org.springframework.data.annotation.Id;
+
 import java.io.Serializable;
 import java.util.Set;
 
-@Entity
-@Table
 public class Offer implements Serializable {
 
     @Id
-    @Column
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
-    @Column(nullable = false, unique = true)
     private String name;
 
-    @NotNull
-    @Column(nullable = false, unique = true)
     private String link;
 
-    @NotNull
-    @Column(nullable = false)
     private String frequency;
 
-    @NotNull
-    @Column(nullable = false)
-    @Enumerated(value = EnumType.STRING)
     private OfferStatus offerStatus;
 
-    @OneToMany(mappedBy = "offer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @Column
     private Set<OfferDetail> offerDetails;
 
     public Offer() {

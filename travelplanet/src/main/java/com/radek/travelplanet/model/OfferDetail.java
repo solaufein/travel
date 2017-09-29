@@ -1,30 +1,19 @@
 package com.radek.travelplanet.model;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import org.springframework.data.annotation.Id;
+
 import java.io.Serializable;
 import java.util.Date;
 
-@Entity
-@Table
 public class OfferDetail implements Serializable {
 
     @Id
-    @Column
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
-    @Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
     private Date timestamp;
 
-    @Column
     private String price;
 
-    @ManyToOne
-    @JoinColumn
-    @NotNull
     private Offer offer;
 
     public OfferDetail() {

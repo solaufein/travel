@@ -1,41 +1,26 @@
 package com.radek.travelplanet.model;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import org.springframework.data.annotation.Id;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Table
 public class Employee implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column
     private Long id;
 
-    @Column(nullable = false)
     private String firstName;
 
-    @Column(nullable = false)
     private String lastName;
 
-    @Column(nullable = false, unique = true)
     private String coreId;
 
-    @Column(nullable = false)
     private String password;
 
-    @NotNull
-    @Column(nullable = false)
-    @Enumerated(value = EnumType.STRING)
     private State state;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "employee_roles",
-            joinColumns = {@JoinColumn(name = "employee_id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private Set<Role> rolesSet = new HashSet<>();
 
     public Employee() {
