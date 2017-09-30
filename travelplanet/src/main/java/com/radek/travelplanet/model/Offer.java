@@ -1,6 +1,7 @@
 package com.radek.travelplanet.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -12,6 +13,7 @@ public class Offer implements Serializable {
 
     private String name;
 
+    @Indexed(unique = true)
     private String link;
 
     private String frequency;

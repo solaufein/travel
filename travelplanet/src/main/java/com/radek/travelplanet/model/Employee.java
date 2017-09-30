@@ -1,6 +1,7 @@
 package com.radek.travelplanet.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -15,6 +16,7 @@ public class Employee implements Serializable {
 
     private String lastName;
 
+    @Indexed(unique = true)
     private String coreId;
 
     private String password;

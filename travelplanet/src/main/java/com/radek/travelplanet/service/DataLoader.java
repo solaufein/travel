@@ -29,6 +29,10 @@ public class DataLoader implements CommandLineRunner {
     public void run(String... strings) throws Exception {
         LOGGER.info("Populating sample data in db.");
 
+        offerRepository.deleteAll();
+        employeeRepository.deleteAll();
+        roleRepository.deleteAll();
+
         Role adminRole = createRole(RoleType.ADMIN);
         Role userRole = createRole(RoleType.USER);
         Role savedAdminRole = roleRepository.save(adminRole);
@@ -58,6 +62,7 @@ public class DataLoader implements CommandLineRunner {
         offer.setName("Spain Week");
         offer.setOfferStatus(OfferStatus.ACTIVE);
         offerRepository.save(offer);
+
         LOGGER.info("Data populated in db.");
     }
 

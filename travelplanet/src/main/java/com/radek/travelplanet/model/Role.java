@@ -1,6 +1,7 @@
 package com.radek.travelplanet.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -11,6 +12,7 @@ public class Role implements Serializable {
     @Id
     private String id;
 
+    @Indexed(unique = true)
     private RoleType roleType;
 
     private Set<Employee> employees = new HashSet<>();
