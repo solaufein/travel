@@ -10,10 +10,10 @@ import java.util.TimerTask;
 public class TimerManager implements AutoCloseable {
 
     private final Timer timer;
-    private final Map<Long, TimerTask> timerTaskMap;
+    private final Map<String, TimerTask> timerTaskMap;
 
     private TimerManager() {
-        this.timerTaskMap = new HashMap<>();
+        this.timerTaskMap = new HashMap<String, TimerTask>();
         this.timer = new Timer();
     }
 

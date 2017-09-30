@@ -6,6 +6,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource
-public interface EmployeeRepository extends MongoRepository<Employee, Long> {
+public interface EmployeeRepository extends MongoRepository<Employee, String> {
     Employee findByCoreId(@Param("coreId") String coreId);
 }

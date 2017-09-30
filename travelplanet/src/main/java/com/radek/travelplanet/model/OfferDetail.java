@@ -8,7 +8,7 @@ import java.util.Date;
 public class OfferDetail implements Serializable {
 
     @Id
-    private Long id;
+    private String id;
 
     private Date timestamp;
 
@@ -19,11 +19,11 @@ public class OfferDetail implements Serializable {
     public OfferDetail() {
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -58,6 +58,7 @@ public class DataLoader implements CommandLineRunner {
         offer.setName("Spain Week");
         offer.setOfferStatus(OfferStatus.ACTIVE);
         offerRepository.save(offer);
+        LOGGER.info("Data populated in db.");
     }
 
     private Role createRole(final RoleType roleType) {

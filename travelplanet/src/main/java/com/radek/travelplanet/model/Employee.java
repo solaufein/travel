@@ -9,7 +9,7 @@ import java.util.Set;
 public class Employee implements Serializable {
 
     @Id
-    private Long id;
+    private String id;
 
     private String firstName;
 
@@ -27,11 +27,11 @@ public class Employee implements Serializable {
         this.state = State.ACTIVE;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

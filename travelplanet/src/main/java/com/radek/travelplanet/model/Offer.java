@@ -8,7 +8,7 @@ import java.util.Set;
 public class Offer implements Serializable {
 
     @Id
-    private Long id;
+    private String id;
 
     private String name;
 
@@ -24,11 +24,11 @@ public class Offer implements Serializable {
         offerStatus = OfferStatus.ACTIVE;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

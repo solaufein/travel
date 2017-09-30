@@ -8,7 +8,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import java.util.List;
 
 @RepositoryRestResource
-public interface OfferRepository extends MongoRepository<Offer, Long> {
+public interface OfferRepository extends MongoRepository<Offer, String> {
 
     List<Offer> findByName(@Param("name") String name);
 
