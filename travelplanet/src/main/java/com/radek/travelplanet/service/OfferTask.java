@@ -4,9 +4,9 @@ import com.radek.travelplanet.model.Offer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
-public class OfferTask extends TimerTask {
+public class OfferTask implements Task {
 
     private static Logger LOGGER = LoggerFactory.getLogger(OfferTask.class);
 
@@ -19,5 +19,15 @@ public class OfferTask extends TimerTask {
     @Override
     public void run() {
         LOGGER.info("Offer run: {} ({})", offer.getName(), offer.getLink());
+    }
+
+    @Override
+    public long getFrequency() {
+        return Long.parseLong(offer.getFrequency());
+    }
+
+    @Override
+    public TimeUnit getTimeUnit() {
+        return TimeUnit.SECONDS;
     }
 }
