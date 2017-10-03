@@ -53,10 +53,7 @@ public class DataLoader implements CommandLineRunner {
         employee.setState(State.ACTIVE);
         employee.setPassword("user");
         employee.getRolesSet().add(savedUserRole);
-        Employee savedAdmin = employeeRepository.save(admin);
         employeeRepository.save(employee);
-
-        LOGGER.info("admin = {}/{}", savedAdmin.getCoreId(), savedAdmin.getPassword());
 
         Offer offer = new Offer();
         offer.setFrequency("10");
