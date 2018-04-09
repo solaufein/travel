@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.concurrent.Executors;
 
 @Configuration
-public class BeanConfig {
+public class AppConfig {
 
     @Bean
     public OfferTaskManager offerTaskManager() {

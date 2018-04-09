@@ -45,6 +45,7 @@ public class DataLoader implements CommandLineRunner {
         admin.setState(State.ACTIVE);
         admin.setPassword("admin");
         admin.getRolesSet().add(savedAdminRole);
+        employeeRepository.save(admin);
 
         Employee employee = new Employee();
         employee.setCoreId("user");

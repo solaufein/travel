@@ -12,13 +12,14 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
 public class AuthenticationExceptionHandler {
-    private final Logger log = LoggerFactory.getLogger(AuthenticationExceptionHandler.class);
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationExceptionHandler.class);
 
     @ExceptionHandler(AuthenticationException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ErrorMessage handleAuthenticationException(AuthenticationException e) {
-        log.debug("Incorrect login");
+        LOGGER.debug("Incorrect login");
         return new ErrorMessage(e.getMessage(), "login.error.badLogin");
     }
 
