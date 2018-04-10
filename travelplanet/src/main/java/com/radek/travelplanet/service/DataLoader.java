@@ -29,6 +29,10 @@ public class DataLoader implements CommandLineRunner {
     public void run(String... strings) throws Exception {
         LOGGER.info("Populating sample data in db.");
 
+        offerRepository.deleteAll();
+        employeeRepository.deleteAll();
+        roleRepository.deleteAll();
+
         Role adminRole = createRole(RoleType.ADMIN);
         Role userRole = createRole(RoleType.USER);
         Role savedAdminRole = roleRepository.save(adminRole);
@@ -41,6 +45,7 @@ public class DataLoader implements CommandLineRunner {
         admin.setState(State.ACTIVE);
         admin.setPassword("admin");
         admin.getRolesSet().add(savedAdminRole);
+        employeeRepository.save(admin);
 
         Employee employee = new Employee();
         employee.setCoreId("user");
@@ -49,7 +54,6 @@ public class DataLoader implements CommandLineRunner {
         employee.setState(State.ACTIVE);
         employee.setPassword("user");
         employee.getRolesSet().add(savedUserRole);
-        employeeRepository.save(admin);
         employeeRepository.save(employee);
 
         Offer offer = new Offer();
@@ -58,6 +62,8 @@ public class DataLoader implements CommandLineRunner {
         offer.setName("Spain Week");
         offer.setOfferStatus(OfferStatus.ACTIVE);
         offerRepository.save(offer);
+
+        LOGGER.info("Data populated in db.");
     }
 
     private Role createRole(final RoleType roleType) {

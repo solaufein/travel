@@ -33,7 +33,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String coreId) throws UsernameNotFoundException {
         Employee employee = employeeRepository.findByCoreId(coreId);
         if (employee == null) {
-            LOGGER.debug("Employee not found! coreId: " + coreId);
+            LOGGER.error("Employee not found! coreId: " + coreId);
             throw new UsernameNotFoundException("Username not found");
         }
         LOGGER.debug("Got employee. coreId: " + coreId);
@@ -43,7 +43,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         boolean accountNonLocked = true;
         Set<Role> roles = employee.getRolesSet();
         if (roles.isEmpty()) {
-            LOGGER.debug("Employee Roles: [EMPTY]");
+            LOGGER.warn("Employee Roles: [EMPTY]");
         }
 
         return new User(

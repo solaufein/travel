@@ -1,52 +1,43 @@
 package com.radek.travelplanet.model;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Table
 public class Employee implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column
-    private Long id;
+    public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
 
-    @Column(nullable = false)
+    @Id
+    private String id;
+
     private String firstName;
 
-    @Column(nullable = false)
     private String lastName;
 
-    @Column(nullable = false, unique = true)
+    @Indexed(unique = true)
     private String coreId;
 
-    @Column(nullable = false)
     private String password;
 
-    @NotNull
-    @Column(nullable = false)
-    @Enumerated(value = EnumType.STRING)
     private State state;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "employee_roles",
-            joinColumns = {@JoinColumn(name = "employee_id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private Set<Role> rolesSet = new HashSet<>();
 
     public Employee() {
         this.state = State.ACTIVE;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -79,7 +70,7 @@ public class Employee implements Serializable {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = PASSWORD_ENCODER.encode(password);
     }
 
     public State getState() {

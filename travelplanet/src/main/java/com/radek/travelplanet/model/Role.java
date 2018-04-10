@@ -1,37 +1,31 @@
 package com.radek.travelplanet.model;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Table
 public class Role implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column
-    private Long id;
+    private String id;
 
-    @NotNull
-    @Column(nullable = false, unique = true)
-    @Enumerated(value = EnumType.STRING)
+    @Indexed(unique = true)
     private RoleType roleType;
 
-    @ManyToMany(mappedBy = "rolesSet", fetch = FetchType.LAZY)
     private Set<Employee> employees = new HashSet<>();
 
     public Role() {
         this.roleType = RoleType.USER;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
