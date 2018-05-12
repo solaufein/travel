@@ -1,25 +1,23 @@
 package com.radek.travelplanet.controller;
 
-import com.radek.travelplanet.model.Offer;
 import com.radek.travelplanet.repository.OfferRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.net.URI;
 
 @RepositoryRestController
 public class OffersController {
 
     private static Logger LOGGER = LoggerFactory.getLogger(OffersController.class);
 
+    private final OfferRepository offerRepository;
+
     @Autowired
-    private OfferRepository offerRepository;
+    public OffersController(OfferRepository offerRepository) {
+        this.offerRepository = offerRepository;
+    }
 
     @PostMapping("/offers/aaa")
     public String customOffersMethod() {

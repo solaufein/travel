@@ -6,4 +6,6 @@ public interface Task extends Runnable {
     long getFrequency();
 
     TimeUnit getTimeUnit();
+
+    //todo: add methods: getStatus()
 }

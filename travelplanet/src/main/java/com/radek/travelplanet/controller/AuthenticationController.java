@@ -7,37 +7,40 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
-@RestController()
+@RestController
 @RequestMapping("/travel/session")
 public class AuthenticationController {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private static final String USER_ATTRIBUTE = "user";
 
-    @RequestMapping(method = RequestMethod.POST)
+    private final AuthenticationManager authenticationManager;
+
+    @Autowired
+    public AuthenticationController(AuthenticationManager authenticationManager) {
+        this.authenticationManager = authenticationManager;
+    }
+
+    @PostMapping
     public User login(@RequestBody Credentials credentials, HttpSession httpSession) {
         Authentication authToken = new UsernamePasswordAuthenticationToken(credentials.getUsername(), credentials.getPassword());
         Authentication auth = authenticationManager.authenticate(authToken);
         SecurityContextHolder.getContext().setAuthentication(auth);
 
         User user = new User(credentials.getUsername(), httpSession.getId(), true);
-        httpSession.setAttribute("user", user);
+        httpSession.setAttribute(USER_ATTRIBUTE, user);
         return user;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public User session(HttpSession session) {
-        return (User) session.getAttribute("user");
+        return (User) session.getAttribute(USER_ATTRIBUTE);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE)
+    @DeleteMapping
     public void logout(HttpSession session) {
         session.invalidate();
     }

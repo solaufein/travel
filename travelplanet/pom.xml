@@ -5,7 +5,7 @@
 
     <groupId>com.radek</groupId>
     <artifactId>travelplanet</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>travelplanet</name>
@@ -24,6 +24,8 @@
         <java.version>1.8</java.version>
         <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
         <maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
+        <de.flapdoodle.embed.mongo.version>1.50.5</de.flapdoodle.embed.mongo.version>
+        <jsoup.version>1.10.2</jsoup.version>
     </properties>
 
     <dependencies>
@@ -33,7 +35,7 @@
             <!--<artifactId>spring-boot-starter-actuator</artifactId>-->
         <!--</dependency>-->
 
-        <!--Database-->
+        <!--PostgresDB-->
         <!--<dependency>-->
             <!--<groupId>org.postgresql</groupId>-->
             <!--<artifactId>postgresql</artifactId>-->
@@ -43,6 +45,18 @@
             <!--<groupId>org.springframework.boot</groupId>-->
             <!--<artifactId>spring-boot-starter-data-jpa</artifactId>-->
         <!--</dependency>-->
+
+        <!--MongoDB-->
+        <dependency>
+            <groupId>de.flapdoodle.embed</groupId>
+            <artifactId>de.flapdoodle.embed.mongo</artifactId>
+            <version>${de.flapdoodle.embed.mongo.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cz.jirutka.spring</groupId>
+            <artifactId>embedmongo-spring</artifactId>
+            <version>RELEASE</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
@@ -64,6 +78,13 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!--JSoup-->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>${jsoup.version}</version>
         </dependency>
 
         <!--DEV Tools-->
@@ -96,24 +117,23 @@
                     <addResources>true</addResources>
                 </configuration>
             </plugin>
-
-            <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-compiler-plugin</artifactId>-->
-                <!--<version>${maven-compiler-plugin.version}</version>-->
-                <!--<configuration>-->
-                    <!--<source>1.8</source>-->
-                    <!--<target>1.8</target>-->
-                    <!--<jdkToolchain>-->
-                        <!--<version>8</version>-->
-                    <!--</jdkToolchain>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
-            <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-jar-plugin</artifactId>-->
-                <!--<version>${maven-jar-plugin.version}</version>-->
-            <!--</plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <jdkToolchain>
+                        <version>8</version>
+                    </jdkToolchain>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${maven-jar-plugin.version}</version>
+            </plugin>
 
             <!--<plugin>-->
                 <!--<groupId>com.github.eirslett</groupId>-->
