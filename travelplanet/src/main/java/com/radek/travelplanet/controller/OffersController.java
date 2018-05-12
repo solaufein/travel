@@ -1,6 +1,6 @@
 package com.radek.travelplanet.controller;
 
-import com.radek.travelplanet.repository.OfferRepository;
+import com.radek.travelplanet.service.OfferService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +12,11 @@ public class OffersController {
 
     private static Logger LOGGER = LoggerFactory.getLogger(OffersController.class);
 
-    private final OfferRepository offerRepository;
+    private final OfferService offerService;
 
     @Autowired
-    public OffersController(OfferRepository offerRepository) {
-        this.offerRepository = offerRepository;
+    public OffersController(OfferService offerService) {
+        this.offerService = offerService;
     }
 
     @PostMapping("/offers/aaa")

@@ -10,15 +10,24 @@ public class OfferTask implements Task {
 
     private static Logger LOGGER = LoggerFactory.getLogger(OfferTask.class);
 
+    private final int taskId;
+    private final TaskStatus taskStatus;
     private final Offer offer;
 
-    public OfferTask(Offer offer) {
+    public OfferTask(int taskId, TaskStatus taskStatus, Offer offer) {
+        this.taskId = taskId;
+        this.taskStatus = taskStatus;
         this.offer = offer;
     }
 
     @Override
     public void run() {
         LOGGER.info("Offer run: {} ({})", offer.getName(), offer.getLink());
+    }
+
+    @Override
+    public int getId() {
+        return taskId;
     }
 
     @Override
@@ -29,5 +38,10 @@ public class OfferTask implements Task {
     @Override
     public TimeUnit getTimeUnit() {
         return TimeUnit.SECONDS;
+    }
+
+    @Override
+    public TaskStatus getStatus() {
+        return taskStatus;
     }
 }
