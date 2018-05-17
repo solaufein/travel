@@ -9,7 +9,7 @@ public class OfferTaskManager implements TaskManager, AutoCloseable {
 
     private static final int INITIAL_DELAY = 500;
     private final Map<Integer, ScheduledFuture<?>> offerTasks = new HashMap<>();
-    private final ScheduledExecutorService executorService; //todo: create new class to scheduling
+    private final ScheduledExecutorService executorService;
 
     public OfferTaskManager(ScheduledExecutorService executorService) {
         this.executorService = executorService;
