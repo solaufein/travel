@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RepositoryRestController
 public class OffersController {
 
-    private static Logger LOGGER = LoggerFactory.getLogger(OffersController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(OffersController.class);
 
     private final OfferService offerService;
 

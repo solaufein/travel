@@ -1,6 +1,8 @@
 package com.radek.travelplanet.service;
 
 import com.radek.travelplanet.model.Offer;
+import com.radek.travelplanet.model.OfferSite;
+import com.radek.travelplanet.service.parser.HtmlParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 public class OfferTask implements Task {
 
-    private static Logger LOGGER = LoggerFactory.getLogger(OfferTask.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(OfferTask.class);
 
     private final int taskId;
     private final TaskStatus taskStatus;
@@ -22,7 +24,12 @@ public class OfferTask implements Task {
 
     @Override
     public void run() {
-        LOGGER.info("Offer run: {} ({})", offer.getName(), offer.getLink());
+        String link = offer.getLink();  //todo: make for this logic TaskCommand
+        OfferSite offerSite = OfferSite.offerSiteFor(link);
+        HtmlParser htmlParser = new HtmlParser(link);
+        String idText = htmlParser.parseIdTag(offerSite.getIdTag());
+
+        LOGGER.info("Offer Task id: {}, name: {}, link: {}. Price: {}.", taskId, offer.getName(), link, idText);
     }
 
     @Override

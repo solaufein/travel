@@ -1,22 +1,38 @@
 package com.radek.travelplanet.model;
 
+import com.radek.travelplanet.exception.OfferException;
 import com.radek.travelplanet.util.DomainUtil;
 
+import java.util.Arrays;
+
 public enum OfferSite {
-    TRAVELPLANET("travelplanet.pl");
+    TRAVELPLANET("travelplanet.pl", "gnc--ttip--toggle");
 
-    private final String value;
+    private final String domain;
+    private final String idTag;
 
-    OfferSite(String value) {
-        this.value = value;
+    OfferSite(String domain, String idTag) {
+        this.domain = domain;
+        this.idTag = idTag;
     }
 
-    public String getValue() {
-        return value;
+    public String getDomain() {
+        return domain;
+    }
+
+    public String getIdTag() {
+        return idTag;
     }
 
     public boolean matches(String siteUrl) {
-        String siteDomain = DomainUtil.getDomainName(siteUrl);
-        return this.getValue().equals(siteDomain);
+        String domainName = DomainUtil.getDomainName(siteUrl);
+        return this.getDomain().equals(domainName);
+    }
+
+    public static OfferSite offerSiteFor(String url) {
+        return Arrays.stream(values())
+                .filter(offerSite -> offerSite.matches(url))
+                .findFirst()
+                .orElseThrow(() -> new OfferException("Not found OfferSite for given url: " + url));
     }
 }

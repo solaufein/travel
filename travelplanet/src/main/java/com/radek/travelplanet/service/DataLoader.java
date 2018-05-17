@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class DataLoader implements CommandLineRunner {
 
-    private static Logger LOGGER = LoggerFactory.getLogger(DataLoader.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DataLoader.class);
     private final RoleRepository roleRepository;
     private final EmployeeRepository employeeRepository;
     private final OfferRepository offerRepository;
