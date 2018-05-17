@@ -7,7 +7,7 @@ import java.util.concurrent.ScheduledFuture;
 
 public class OfferTaskManager implements TaskManager, AutoCloseable {
 
-    private static final int INITIAL_DELAY = 500;
+    private static final int INITIAL_DELAY = 5;
     private final Map<Integer, ScheduledFuture<?>> offerTasks = new HashMap<>();
     private final ScheduledExecutorService executorService;
 
