@@ -18,9 +18,9 @@ public class AuthenticationExceptionHandler {
     @ExceptionHandler(AuthenticationException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ErrorMessage handleAuthenticationException(AuthenticationException e) {
+    public ErrorMessage handleAuthenticationException(AuthenticationException ex) {
         LOGGER.debug("Incorrect login");
-        return new ErrorMessage(e.getMessage(), "login.error.badLogin");
+        return new ErrorMessage(ex.getMessage(), "login.error.badLogin");
     }
 
 }
