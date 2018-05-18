@@ -29,8 +29,8 @@ public class HtmlParser {
     private Document getDocument() {
         try {
             return Jsoup.connect(url).get();
-        } catch (IOException e) {
-            throw new OfferException("Cannot connect to: " + url);
+        } catch (IOException ex) {
+            throw new OfferException("Cannot connect to: " + url, ex);
         }
     }
 }
