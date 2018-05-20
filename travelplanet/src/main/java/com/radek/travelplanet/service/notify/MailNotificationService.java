@@ -3,11 +3,11 @@ package com.radek.travelplanet.service.notify;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
-public class OfferNotificationService implements NotificationService {
+public class MailNotificationService implements NotificationService {
 
     private final JavaMailSender mailSender;
 
-    public OfferNotificationService(JavaMailSender mailSender) {
+    public MailNotificationService(JavaMailSender mailSender) {
         this.mailSender = mailSender;
     }
 

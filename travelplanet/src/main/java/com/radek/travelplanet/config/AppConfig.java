@@ -1,12 +1,9 @@
 package com.radek.travelplanet.config;
 
 import com.radek.travelplanet.repository.OfferRepository;
-import com.radek.travelplanet.service.OfferService;
-import com.radek.travelplanet.service.OfferServiceImpl;
-import com.radek.travelplanet.service.OfferTaskFactory;
-import com.radek.travelplanet.service.OfferTaskManager;
+import com.radek.travelplanet.service.*;
+import com.radek.travelplanet.service.notify.MailNotificationService;
 import com.radek.travelplanet.service.notify.NotificationService;
-import com.radek.travelplanet.service.notify.OfferNotificationService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -30,12 +27,22 @@ public class AppConfig {
     }
 
     @Bean
-    public OfferTaskManager offerTaskManager() {
-        return new OfferTaskManager(Executors.newSingleThreadScheduledExecutor());
+    public OfferTaskManager offerTaskManager(TaskRepository taskRepository, TaskRunner taskRunner) {
+        return new OfferTaskManager(taskRepository, taskRunner);
     }
 
     @Bean
     public NotificationService offerNotifyService(JavaMailSender mailSender) {
-        return new OfferNotificationService(mailSender);
+        return new MailNotificationService(mailSender);
+    }
+
+    @Bean
+    public TaskRepository taskRepository() {
+        return new InMemoryTaskRepository();
+    }
+
+    @Bean
+    public TaskRunner taskRunner() {
+        return new ScheduledTaskRunner(Executors.newScheduledThreadPool(4));
     }
 }

@@ -1,33 +1,29 @@
 package com.radek.travelplanet.service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-
 public class OfferTaskManager implements TaskManager, AutoCloseable {
 
-    private static final int INITIAL_DELAY = 5;
-    private final Map<Integer, ScheduledFuture<?>> offerTasks = new HashMap<>();
-    private final ScheduledExecutorService executorService;
+    private final TaskRepository taskRepository;
+    private final TaskRunner taskRunner;
 
-    public OfferTaskManager(ScheduledExecutorService executorService) {
-        this.executorService = executorService;
+    public OfferTaskManager(TaskRepository taskRepository, TaskRunner taskRunner) {
+        this.taskRepository = taskRepository;
+        this.taskRunner = taskRunner;
     }
 
     @Override
-    public void scheduleTask(Task task) {
-        ScheduledFuture<?> offerTaskFuture = executorService.scheduleAtFixedRate(task, INITIAL_DELAY, task.getFrequency(), task.getTimeUnit());
-        offerTasks.put(task.getId(), offerTaskFuture);
+    public void startTask(Task task) {
+        TaskInfo taskInfo = taskRunner.execute(task);
+        taskRepository.save(task.getId(), taskInfo);
     }
 
     @Override
     public void cancelTask(Task task) {
-        offerTasks.get(task.getId()).cancel(false);
+        TaskInfo taskInfo = taskRepository.get(task.getId());
+        taskInfo.cancel();
     }
 
     @Override
     public void close() {
-        executorService.shutdownNow();
+        taskRunner.close();
     }
 }

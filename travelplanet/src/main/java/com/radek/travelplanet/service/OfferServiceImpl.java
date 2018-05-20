@@ -19,6 +19,6 @@ public class OfferServiceImpl implements OfferService {
     public void watch(Offer offer) {
         Offer savedOffer = offerRepository.save(offer);
         Task task = offerTaskFactory.createTask(savedOffer);
-        offerTaskManager.scheduleTask(task);
+        offerTaskManager.startTask(task);
     }
 }
