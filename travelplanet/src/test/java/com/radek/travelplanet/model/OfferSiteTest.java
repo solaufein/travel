@@ -1,6 +1,7 @@
 package com.radek.travelplanet.model;
 
 import com.radek.travelplanet.exception.OfferException;
+import com.radek.travelplanet.service.OfferSite;
 import org.hamcrest.core.Is;
 import org.junit.Test;
 

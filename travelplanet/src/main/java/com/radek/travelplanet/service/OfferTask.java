@@ -1,7 +1,6 @@
 package com.radek.travelplanet.service;
 
 import com.radek.travelplanet.model.Offer;
-import com.radek.travelplanet.model.OfferSite;
 import com.radek.travelplanet.service.parser.HtmlParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

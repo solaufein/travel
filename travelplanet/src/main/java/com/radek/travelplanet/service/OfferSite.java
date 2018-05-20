@@ -1,4 +1,4 @@
-package com.radek.travelplanet.model;
+package com.radek.travelplanet.service;
 
 import com.radek.travelplanet.exception.OfferException;
 import com.radek.travelplanet.util.DomainUtil;
