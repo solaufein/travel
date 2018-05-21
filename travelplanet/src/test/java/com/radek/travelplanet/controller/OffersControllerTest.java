@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.json.JacksonTester;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -21,6 +23,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class OffersControllerTest {
 
+    @MockBean
+    private JavaMailSender mailSender;
+
     @Autowired
     private MockMvc mvc;
 
@@ -30,9 +35,6 @@ public class OffersControllerTest {
     public void setUp() throws Exception {
         JacksonTester.initFields(this, new ObjectMapper());
     }
-
-    //    @MockBean
-    //    private OfferRepository offerRepository;  //todo: remove
 
     @Test
     public void shouldWatchOfferWithGivenUrl() throws Exception {
@@ -45,7 +47,7 @@ public class OffersControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
-        Thread.sleep(10000);    //todo: remove
+        Thread.sleep(5000);    //todo: remove
     }
 
 }

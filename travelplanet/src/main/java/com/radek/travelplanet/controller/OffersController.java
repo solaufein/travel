@@ -10,10 +10,12 @@ import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.HashSet;
 
 @RepositoryRestController
+@RequestMapping("/travel")
 public class OffersController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OffersController.class);
@@ -23,13 +25,6 @@ public class OffersController {
     @Autowired
     public OffersController(OfferService offerService) {
         this.offerService = offerService;
-    }
-
-    @PostMapping("/offers/aaa")
-    public String customOffersMethod() {
-        LOGGER.info("Custom offers rest method.");
-
-        return "index";
     }
 
     @PostMapping("/offers/watch")

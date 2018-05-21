@@ -34,7 +34,7 @@ public class AppConfig {
     }
 
     @Bean
-    public NotificationService offerNotifyService(JavaMailSender mailSender) {
+    public NotificationService notificationService(JavaMailSender mailSender) {
         return new MailNotificationService(mailSender);
     }
 
