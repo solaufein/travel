@@ -33,15 +33,15 @@ public class OffersController {
     }
 
     @PostMapping("/offers/watch")
-    public ResponseEntity<?> watchOffer(@RequestBody OfferCommand offerCommand) {
-        LOGGER.info("Watch Offer request received for: {}", offerCommand.getUrl());
+    public ResponseEntity<?> watchOffer(@RequestBody OfferRequest offerRequest) {
+        LOGGER.info("Watch Offer request received for: {}", offerRequest.getUrl());
 
         Offer offer = new Offer();
         offer.setName("Example Name");
         offer.setOfferStatus(OfferStatus.ACTIVE);
         offer.setFrequency("5");
         offer.setOfferDetails(new HashSet<>());
-        offer.setLink(offerCommand.getUrl());
+        offer.setLink(offerRequest.getUrl());
 
         offerService.watch(offer);
 
