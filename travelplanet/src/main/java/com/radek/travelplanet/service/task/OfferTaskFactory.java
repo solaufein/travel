@@ -6,7 +6,6 @@ public class OfferTaskFactory {
 
     private static final long TASK_INITIAL_DELAY = 3L;
 
-    //todo: add listeners to notify on change
     public Task createTask(Offer offer) {
         String taskId = offer.getId();
         String frequency = offer.getFrequency();

@@ -27,8 +27,10 @@ public class OfferTask implements Task {
     @Override
     public void run() {
         try {
-            taskCommand.execute();
+            taskCommand.execute();      //todo: add listeners to notify on change (need to change method execute() to return param?)
         } catch (Exception ex) {
+            //todo: add listeners to update status of db Offer and inMemory TaskInfo?
+
             LOGGER.error("Exception occured: {}", ex.getMessage());
             throw new OfferException("Exception occured: ", ex);
         }

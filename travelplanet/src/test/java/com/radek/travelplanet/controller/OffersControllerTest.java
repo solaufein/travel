@@ -32,7 +32,7 @@ public class OffersControllerTest {
     }
 
     //    @MockBean
-    //    private OfferRepository offerRepository;
+    //    private OfferRepository offerRepository;  //todo: remove
 
     @Test
     public void shouldWatchOfferWithGivenUrl() throws Exception {
@@ -44,6 +44,8 @@ public class OffersControllerTest {
                 .content(content)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+
+        Thread.sleep(10000);    //todo: remove
     }
 
 }
