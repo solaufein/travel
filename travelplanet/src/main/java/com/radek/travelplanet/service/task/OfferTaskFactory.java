@@ -6,10 +6,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class OfferTaskFactory {
 
-    private final AtomicInteger taskId = new AtomicInteger(1);
+    private final AtomicInteger idGenerator = new AtomicInteger(1);
 
     public Task createTask(Offer offer) {
-        int id = taskId.incrementAndGet();
-        return new OfferTask(id, TaskStatus.SUBMITTED, offer);
+        int taskId = idGenerator.incrementAndGet();
+        String frequency = offer.getFrequency();
+        TaskCommand taskCommand = new OfferTaskCommand(offer);
+
+        return new OfferTask(taskId, TaskStatus.SUBMITTED, frequency, taskCommand);
     }
 }

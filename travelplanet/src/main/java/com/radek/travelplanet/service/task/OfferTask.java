@@ -1,9 +1,6 @@
 package com.radek.travelplanet.service.task;
 
 import com.radek.travelplanet.exception.OfferException;
-import com.radek.travelplanet.model.Offer;
-import com.radek.travelplanet.service.OfferSite;
-import com.radek.travelplanet.service.parser.HtmlParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,22 +12,20 @@ public class OfferTask implements Task {
 
     private final int taskId;
     private final TaskStatus taskStatus;
-    private final Offer offer;
+    private final TaskCommand taskCommand;
+    private String frequency;
 
-    public OfferTask(int taskId, TaskStatus taskStatus, Offer offer) {
+    public OfferTask(int taskId, TaskStatus taskStatus, String frequency, TaskCommand taskCommand) {
         this.taskId = taskId;
         this.taskStatus = taskStatus;
-        this.offer = offer;
+        this.frequency = frequency;
+        this.taskCommand = taskCommand;
     }
 
     @Override
     public void run() {
         try {
-            String link = offer.getLink();  //todo: make for this logic TaskCommand
-            OfferSite offerSite = OfferSite.offerSiteFor(link);
-            HtmlParser htmlParser = new HtmlParser(link);
-            String idText = htmlParser.parseIdTag(offerSite.getIdTag());
-            LOGGER.info("Offer Task id: {}, name: {}, link: {}. Price: {}.", taskId, offer.getName(), link, idText);
+            taskCommand.execute();
         } catch (Exception ex) {
             LOGGER.error("Exception occured: {}", ex.getMessage());
             throw new OfferException("Exception occured: ", ex);
@@ -44,7 +39,7 @@ public class OfferTask implements Task {
 
     @Override
     public long getFrequency() {
-        return Long.parseLong(offer.getFrequency());
+        return Long.parseLong(frequency);
     }
 
     @Override
