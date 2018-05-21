@@ -1,6 +1,8 @@
-package com.radek.travelplanet.service;
+package com.radek.travelplanet.service.task;
 
+import com.radek.travelplanet.exception.OfferException;
 import com.radek.travelplanet.model.Offer;
+import com.radek.travelplanet.service.OfferSite;
 import com.radek.travelplanet.service.parser.HtmlParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,12 +25,16 @@ public class OfferTask implements Task {
 
     @Override
     public void run() {
-        String link = offer.getLink();  //todo: make for this logic TaskCommand
-        OfferSite offerSite = OfferSite.offerSiteFor(link);
-        HtmlParser htmlParser = new HtmlParser(link);
-        String idText = htmlParser.parseIdTag(offerSite.getIdTag());
-
-        LOGGER.info("Offer Task id: {}, name: {}, link: {}. Price: {}.", taskId, offer.getName(), link, idText);
+        try {
+            String link = offer.getLink();  //todo: make for this logic TaskCommand
+            OfferSite offerSite = OfferSite.offerSiteFor(link);
+            HtmlParser htmlParser = new HtmlParser(link);
+            String idText = htmlParser.parseIdTag(offerSite.getIdTag());
+            LOGGER.info("Offer Task id: {}, name: {}, link: {}. Price: {}.", taskId, offer.getName(), link, idText);
+        } catch (Exception ex) {
+            LOGGER.error("Exception occured: {}", ex.getMessage());
+            throw new OfferException("Exception occured: ", ex);
+        }
     }
 
     @Override

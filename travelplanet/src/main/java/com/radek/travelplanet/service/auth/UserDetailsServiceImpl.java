@@ -1,4 +1,4 @@
-package com.radek.travelplanet.service;
+package com.radek.travelplanet.service.auth;
 
 import com.radek.travelplanet.model.Employee;
 import com.radek.travelplanet.model.Role;

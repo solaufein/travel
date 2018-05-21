@@ -1,4 +1,4 @@
-package com.radek.travelplanet.service;
+package com.radek.travelplanet.service.task;
 
 import java.util.concurrent.TimeUnit;
 

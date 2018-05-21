@@ -1,6 +1,6 @@
 package com.radek.travelplanet.config;
 
-import com.radek.travelplanet.service.UserDetailsServiceImpl;
+import com.radek.travelplanet.service.auth.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

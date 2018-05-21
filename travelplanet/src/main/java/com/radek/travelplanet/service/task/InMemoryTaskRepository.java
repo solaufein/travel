@@ -1,4 +1,4 @@
-package com.radek.travelplanet.service;
+package com.radek.travelplanet.service.task;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -16,8 +16,8 @@ public class InMemoryTaskRepository implements TaskRepository {
     }
 
     @Override
-    public void save(int id, TaskInfo taskInfo) {
-        tasks.put(id, taskInfo);
+    public void save(TaskInfo taskInfo) {
+        tasks.put(taskInfo.getTaskId(), taskInfo);
     }
 
     @Override

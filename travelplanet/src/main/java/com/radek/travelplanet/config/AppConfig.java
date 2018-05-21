@@ -1,9 +1,11 @@
 package com.radek.travelplanet.config;
 
 import com.radek.travelplanet.repository.OfferRepository;
-import com.radek.travelplanet.service.*;
+import com.radek.travelplanet.service.OfferService;
+import com.radek.travelplanet.service.OfferServiceImpl;
 import com.radek.travelplanet.service.notify.MailNotificationService;
 import com.radek.travelplanet.service.notify.NotificationService;
+import com.radek.travelplanet.service.task.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -17,8 +19,8 @@ import java.util.concurrent.Executors;
 public class AppConfig {
 
     @Bean
-    public OfferService offerService(OfferTaskFactory offerTaskFactory, OfferTaskManager offerTaskManager, OfferRepository offerRepository) {
-        return new OfferServiceImpl(offerTaskFactory, offerTaskManager, offerRepository);
+    public OfferService offerService(OfferTaskFactory offerTaskFactory, TaskManager taskManager, OfferRepository offerRepository) {
+        return new OfferServiceImpl(offerTaskFactory, taskManager, offerRepository);
     }
 
     @Bean
@@ -27,8 +29,8 @@ public class AppConfig {
     }
 
     @Bean
-    public OfferTaskManager offerTaskManager(TaskRepository taskRepository, TaskRunner taskRunner) {
-        return new OfferTaskManager(taskRepository, taskRunner);
+    public TaskManager taskManager(TaskRepository taskRepository, TaskRunner taskRunner) {
+        return new TaskManagerImpl(taskRepository, taskRunner);
     }
 
     @Bean

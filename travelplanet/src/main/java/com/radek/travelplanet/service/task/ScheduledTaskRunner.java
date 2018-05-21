@@ -1,6 +1,5 @@
-package com.radek.travelplanet.service;
+package com.radek.travelplanet.service.task;
 
-import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
@@ -17,7 +16,7 @@ public class ScheduledTaskRunner implements TaskRunner {
     @Override
     public TaskInfo execute(Task task) {
         ScheduledFuture<?> scheduledFuture = executorService.scheduleAtFixedRate(task, INITIAL_DELAY, task.getFrequency(), task.getTimeUnit());
-        return createTaskInfo(scheduledFuture);
+        return new TaskInfoImpl(task.getId(), scheduledFuture);
     }
 
     @Override
@@ -30,24 +29,5 @@ public class ScheduledTaskRunner implements TaskRunner {
         } catch (InterruptedException e) {
             executorService.shutdownNow();
         }
-    }
-
-    private TaskInfo createTaskInfo(Future<?> future) {
-        return new TaskInfo() {
-            @Override
-            public boolean isCancelled() {
-                return future.isCancelled();
-            }
-
-            @Override
-            public boolean isDone() {
-                return future.isDone();
-            }
-
-            @Override
-            public void cancel() {
-                future.cancel(false);
-            }
-        };
     }
 }

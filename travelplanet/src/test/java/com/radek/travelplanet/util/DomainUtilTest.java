@@ -7,13 +7,18 @@ import static org.junit.Assert.assertThat;
 
 public class DomainUtilTest {
 
-    private static final String URL = "https://www.travelplanet.pl/blabla/bla";
-
     @Test
-    public void shouldGetDomainName() throws Exception {
-        String domainName = DomainUtil.getDomainName(URL);
+    public void shouldGetDomainName() {
+        String domainName = DomainUtil.getDomainName("https://www.travelplanet.pl/blabla/bla");
 
         assertThat(domainName, Is.is("travelplanet.pl"));
     }
 
+    @Test
+    public void shouldReturnEmptyDomainForInvalidUrl() {
+        String domainName = DomainUtil.getDomainName("www.onet.pl");
+
+        assertThat(domainName, Is.is(""));
+
+    }
 }

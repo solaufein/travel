@@ -1,11 +1,11 @@
-package com.radek.travelplanet.service;
+package com.radek.travelplanet.service.task;
 
-public class OfferTaskManager implements TaskManager, AutoCloseable {
+public class TaskManagerImpl implements TaskManager, AutoCloseable {
 
     private final TaskRepository taskRepository;
     private final TaskRunner taskRunner;
 
-    public OfferTaskManager(TaskRepository taskRepository, TaskRunner taskRunner) {
+    public TaskManagerImpl(TaskRepository taskRepository, TaskRunner taskRunner) {
         this.taskRepository = taskRepository;
         this.taskRunner = taskRunner;
     }
@@ -13,7 +13,7 @@ public class OfferTaskManager implements TaskManager, AutoCloseable {
     @Override
     public void startTask(Task task) {
         TaskInfo taskInfo = taskRunner.execute(task);
-        taskRepository.save(task.getId(), taskInfo);
+        taskRepository.save(taskInfo);
     }
 
     @Override
