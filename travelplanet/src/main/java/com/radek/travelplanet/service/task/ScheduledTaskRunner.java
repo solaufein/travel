@@ -6,7 +6,6 @@ import java.util.concurrent.TimeUnit;
 
 public class ScheduledTaskRunner implements TaskRunner {
 
-    private static final int INITIAL_DELAY = 5;
     private final ScheduledExecutorService executorService;
 
     public ScheduledTaskRunner(ScheduledExecutorService executorService) {
@@ -15,7 +14,7 @@ public class ScheduledTaskRunner implements TaskRunner {
 
     @Override
     public TaskInfo execute(Task task) {
-        ScheduledFuture<?> scheduledFuture = executorService.scheduleAtFixedRate(task, INITIAL_DELAY, task.getFrequency(), task.getTimeUnit());
+        ScheduledFuture<?> scheduledFuture = executorService.scheduleAtFixedRate(task, task.getInitialDelay(), task.getFrequency(), task.getTimeUnit());
         return new TaskInfoImpl(task.getId(), scheduledFuture);
     }
 

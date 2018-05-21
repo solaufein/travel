@@ -10,15 +10,17 @@ public class OfferTask implements Task {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OfferTask.class);
 
-    private final int taskId;
+    private final String taskId;
     private final TaskStatus taskStatus;
     private final TaskCommand taskCommand;
     private String frequency;
+    private long initialDelay;
 
-    public OfferTask(int taskId, TaskStatus taskStatus, String frequency, TaskCommand taskCommand) {
+    public OfferTask(String taskId, TaskStatus taskStatus, String frequency, long initialDelay, TaskCommand taskCommand) {
         this.taskId = taskId;
         this.taskStatus = taskStatus;
         this.frequency = frequency;
+        this.initialDelay = initialDelay;
         this.taskCommand = taskCommand;
     }
 
@@ -33,13 +35,18 @@ public class OfferTask implements Task {
     }
 
     @Override
-    public int getId() {
+    public String getId() {
         return taskId;
     }
 
     @Override
     public long getFrequency() {
         return Long.parseLong(frequency);
+    }
+
+    @Override
+    public long getInitialDelay() {
+        return initialDelay;
     }
 
     @Override

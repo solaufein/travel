@@ -4,9 +4,11 @@ import java.util.concurrent.TimeUnit;
 
 public interface Task extends Runnable {
 
-    int getId();
+    String getId();
 
     long getFrequency();
+
+    long getInitialDelay();
 
     TimeUnit getTimeUnit();
 

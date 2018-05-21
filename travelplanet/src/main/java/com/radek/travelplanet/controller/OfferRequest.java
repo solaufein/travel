@@ -1,6 +1,6 @@
 package com.radek.travelplanet.controller;
 
-public class OfferCommand {
+public class OfferRequest {
 
     private String url;
 

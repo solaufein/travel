@@ -5,13 +5,13 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class InMemoryTaskRepository implements TaskRepository {
 
-    private final Map<Integer, TaskInfo> tasks;
+    private final Map<String, TaskInfo> tasks;
 
     public InMemoryTaskRepository() {
         this(new ConcurrentHashMap<>());
     }
 
-    public InMemoryTaskRepository(Map<Integer, TaskInfo> tasks) {
+    public InMemoryTaskRepository(Map<String, TaskInfo> tasks) {
         this.tasks = tasks;
     }
 
@@ -21,7 +21,7 @@ public class InMemoryTaskRepository implements TaskRepository {
     }
 
     @Override
-    public TaskInfo get(int id) {
-        return tasks.get(id);
+    public TaskInfo get(String taskId) {
+        return tasks.get(taskId);
     }
 }

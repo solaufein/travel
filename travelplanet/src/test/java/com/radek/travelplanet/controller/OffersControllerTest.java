@@ -24,7 +24,7 @@ public class OffersControllerTest {
     @Autowired
     private MockMvc mvc;
 
-    private JacksonTester<OfferCommand> jsonOfferCommand;
+    private JacksonTester<OfferRequest> jsonOfferRequest;
 
     @Before
     public void setUp() throws Exception {
@@ -36,9 +36,9 @@ public class OffersControllerTest {
 
     @Test
     public void shouldWatchOfferWithGivenUrl() throws Exception {
-        OfferCommand offerCommand = new OfferCommand();
-        offerCommand.setUrl("www.onet.pl");
-        String content = jsonOfferCommand.write(offerCommand).getJson();
+        OfferRequest offerRequest = new OfferRequest();
+        offerRequest.setUrl("www.onet.pl");
+        String content = jsonOfferRequest.write(offerRequest).getJson();
 
         mvc.perform(post("/travel/offers/watch").with(user("admin").password("admin").roles("ADMIN"))
                 .content(content)

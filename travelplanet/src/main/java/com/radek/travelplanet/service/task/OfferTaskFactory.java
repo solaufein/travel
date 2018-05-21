@@ -2,17 +2,16 @@ package com.radek.travelplanet.service.task;
 
 import com.radek.travelplanet.model.Offer;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 public class OfferTaskFactory {
 
-    private final AtomicInteger idGenerator = new AtomicInteger(1);
+    private static final long TASK_INITIAL_DELAY = 3L;
 
+    //todo: add listeners to notify on change
     public Task createTask(Offer offer) {
-        int taskId = idGenerator.incrementAndGet();
+        String taskId = offer.getId();
         String frequency = offer.getFrequency();
         TaskCommand taskCommand = new OfferTaskCommand(offer);
 
-        return new OfferTask(taskId, TaskStatus.SUBMITTED, frequency, taskCommand);
+        return new OfferTask(taskId, TaskStatus.SUBMITTED, frequency, TASK_INITIAL_DELAY, taskCommand);
     }
 }

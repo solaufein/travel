@@ -4,5 +4,5 @@ public interface TaskManager {
 
     void startTask(Task task);
 
-    void cancelTask(Task task);
+    void cancelTask(String taskId);
 }

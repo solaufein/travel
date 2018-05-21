@@ -1,7 +1,7 @@
 package com.radek.travelplanet.service.task;
 
 public interface TaskInfo {
-    int getTaskId();
+    String getTaskId();
     boolean isCancelled();
     boolean isDone();
     void cancel();
