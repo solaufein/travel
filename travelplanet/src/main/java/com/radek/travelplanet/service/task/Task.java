@@ -13,4 +13,6 @@ public interface Task extends Runnable {
     TimeUnit getTimeUnit();
 
     TaskStatus getStatus();
+
+    void updateStatus(TaskStatus taskStatus);
 }

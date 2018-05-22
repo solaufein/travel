@@ -11,6 +11,9 @@ public class OfferTaskFactory {
         String frequency = offer.getFrequency();
         TaskCommand taskCommand = new OfferTaskCommand(offer);
 
-        return new OfferTask(taskId, TaskStatus.SUBMITTED, frequency, TASK_INITIAL_DELAY, taskCommand);
+        OfferTask offerTask = new OfferTask(taskId, frequency, TASK_INITIAL_DELAY, taskCommand);
+
+
+        return offerTask;
     }
 }
