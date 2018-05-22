@@ -11,6 +11,8 @@ import java.util.Set;
 
 public class Employee implements Serializable {
 
+    //todo: consider in this Document have Set<Offer> (that has Set<OfferDetail>)
+
     public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
 
     @Id
