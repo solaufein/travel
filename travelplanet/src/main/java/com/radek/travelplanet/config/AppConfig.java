@@ -4,6 +4,7 @@ import com.radek.travelplanet.repository.OfferRepository;
 import com.radek.travelplanet.service.*;
 import com.radek.travelplanet.service.notify.MailNotificationService;
 import com.radek.travelplanet.service.notify.NotificationService;
+import com.radek.travelplanet.service.parser.ParserFactory;
 import com.radek.travelplanet.service.task.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,8 +25,13 @@ public class AppConfig {
     }
 
     @Bean
-    public OfferSite travelplanetOfferSite() {
-        return new TravelplanetOfferSite();
+    public OfferSite travelplanetOfferSite(ParserFactory parserFactory) {
+        return new TravelplanetOfferSite(parserFactory);
+    }
+
+    @Bean
+    public ParserFactory parserFactory() {
+        return new ParserFactory();
     }
 
     @Bean

@@ -3,7 +3,6 @@ package com.radek.travelplanet.service.task;
 import com.radek.travelplanet.exception.OfferException;
 import com.radek.travelplanet.model.Offer;
 import com.radek.travelplanet.service.OfferSite;
-import com.radek.travelplanet.service.parser.HtmlParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,23 +18,21 @@ public class OfferTask implements Task, ListenableTask {
     private final List<OnFailureListener> onFailureListeners = new ArrayList<>();
     private final Offer offer;
     private final OfferSite offerSite;
-    private final HtmlParser htmlParser;
     private long initialDelay = 3L;
     private TaskStatus taskStatus = TaskStatus.SUBMITTED;
 
-    public OfferTask(Offer offer, OfferSite offerSite, HtmlParser htmlParser) {
+    public OfferTask(Offer offer, OfferSite offerSite) {
         this.offer = offer;
         this.offerSite = offerSite;
-        this.htmlParser = htmlParser;
     }
 
     @Override
     public void run() {
         try {
-            String idTag = offerSite.getIdTag();
-            String idText = htmlParser.parseIdTag(idTag);
+            String link = offer.getLink();
+            String price = offerSite.getPrice(link);
 
-            LOGGER.info("Offer name: {}, link: {}. price: {}.", offer.getName(), offer.getLink(), idText);
+            LOGGER.info("Offer name: {}, link: {}. price: {}.", offer.getName(), link, price);
 
             //todo: check change and send mail
             notifySuccess();

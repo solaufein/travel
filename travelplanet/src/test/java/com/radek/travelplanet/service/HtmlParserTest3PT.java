@@ -1,6 +1,7 @@
 package com.radek.travelplanet.service;
 
 import com.radek.travelplanet.service.parser.HtmlParser;
+import com.radek.travelplanet.service.parser.ParserFactory;
 import org.hamcrest.core.Is;
 import org.junit.Test;
 
@@ -12,7 +13,8 @@ public class HtmlParserTest3PT {
 
     @Test
     public void shouldParseIdTagFromGivenUrl() throws Exception {
-        String price = new HtmlParser(URL).parseIdTag("gnc--ttip--toggle");
+        HtmlParser htmlParser = new ParserFactory().createHtmlParser(URL);
+        String price = htmlParser.parseIdTag("gnc--ttip--toggle");
 
         assertThat(price, Is.is("1 539 zł"));
     }

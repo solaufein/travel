@@ -1,11 +1,17 @@
 package com.radek.travelplanet.service;
 
+import com.radek.travelplanet.service.parser.HtmlParser;
+import com.radek.travelplanet.service.parser.ParserFactory;
+
 public class TravelplanetOfferSite implements OfferSite {
 
     private static final String DOMAIN = "travelplanet.pl";
     private static final String PRICE_ID_TAG = "gnc--ttip--toggle";
+    private final ParserFactory parserFactory;
 
-    //todo: consider here getPrice method: 'String parse(String url)' that will be using here HtmlParser
+    public TravelplanetOfferSite(ParserFactory parserFactory) {
+        this.parserFactory = parserFactory;
+    }
 
     @Override
     public String getDomain() {
@@ -13,7 +19,8 @@ public class TravelplanetOfferSite implements OfferSite {
     }
 
     @Override
-    public String getIdTag() {
-        return PRICE_ID_TAG;
+    public String getPrice(String url) {
+        HtmlParser htmlParser = parserFactory.createHtmlParser(url);
+        return htmlParser.parseIdTag(PRICE_ID_TAG);
     }
 }
