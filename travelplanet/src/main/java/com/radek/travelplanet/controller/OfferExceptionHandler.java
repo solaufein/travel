@@ -1,7 +1,7 @@
 package com.radek.travelplanet.controller;
 
 import com.radek.travelplanet.exception.OfferException;
-import com.radek.travelplanet.model.auth.ErrorMessage;
+import com.radek.travelplanet.controller.model.ErrorMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

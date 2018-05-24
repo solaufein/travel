@@ -1,4 +1,4 @@
-package com.radek.travelplanet.model.auth;
+package com.radek.travelplanet.controller.model;
 
 import java.io.Serializable;
 

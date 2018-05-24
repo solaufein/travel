@@ -1,4 +1,4 @@
-package com.radek.travelplanet.model.auth;
+package com.radek.travelplanet.controller.model;
 
 public class ErrorMessage {
     private String message;

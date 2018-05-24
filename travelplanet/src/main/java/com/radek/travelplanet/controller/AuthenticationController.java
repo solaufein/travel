@@ -1,7 +1,7 @@
 package com.radek.travelplanet.controller;
 
-import com.radek.travelplanet.model.auth.Credentials;
-import com.radek.travelplanet.model.auth.User;
+import com.radek.travelplanet.controller.model.Credentials;
+import com.radek.travelplanet.controller.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

@@ -6,11 +6,13 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 
 public class ParserFactory {
 
     public HtmlParser createHtmlParser(String url) {
         Document document = getDocument(url);
+//        document.charset(Charset.forName("..."));   //todo: set document charset ==>  1Â 032 zĹ‚.
         return new HtmlParser(document);
     }
 
