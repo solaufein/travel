@@ -13,13 +13,22 @@ public final class HtmlParser {
     }
 
     public String parseIdTag(String idTag) {
-        Element idElement = document.getElementById(idTag);
+        Element element = document.getElementById(idTag);
 
-        if (idElement == null) {
-            throw new OfferException("Not found idTag: " + idTag);
-        }
-
-        return idElement.text();
+        return getValue(idTag, element);
     }
 
+    public String parseClassTag(String classTag) {
+        Element element = document.getElementsByClass(classTag).first();
+
+        return getValue(classTag, element);
+    }
+
+    private String getValue(String classTag, Element element) {
+        if (element == null) {
+            throw new OfferException("Not found element for tag: " + classTag);
+        }
+
+        return element.text();
+    }
 }

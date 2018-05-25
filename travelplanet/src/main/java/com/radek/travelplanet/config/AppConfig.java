@@ -30,6 +30,11 @@ public class AppConfig {
     }
 
     @Bean
+    public OfferSite itakaOfferSite(ParserFactory parserFactory) {
+        return new ItakaOfferSite(parserFactory);
+    }
+
+    @Bean
     public ParserFactory parserFactory() {
         return new ParserFactory();
     }
