@@ -2,6 +2,7 @@ package com.radek.travelplanet.service;
 
 import com.radek.travelplanet.service.parser.HtmlParser;
 import com.radek.travelplanet.service.parser.ParserFactory;
+import com.radek.travelplanet.util.NumberUtil;
 
 public class TravelplanetOfferSite implements OfferSite {
 
@@ -21,6 +22,7 @@ public class TravelplanetOfferSite implements OfferSite {
     @Override
     public String getPrice(String url) {
         HtmlParser htmlParser = parserFactory.createHtmlParser(url);
-        return htmlParser.parseIdTag(PRICE_ID_TAG);
+        String idTagPrice = htmlParser.parseIdTag(PRICE_ID_TAG);
+        return NumberUtil.findTextNumber(idTagPrice);
     }
 }
