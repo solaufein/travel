@@ -46,7 +46,7 @@ public class OfferTask implements Task, ListenableTask {
     }
 
     @Override
-    public String getId() {
+    public Long getId() {
         return offer.getId();
     }
 

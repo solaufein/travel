@@ -11,15 +11,15 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DataLoader implements CommandLineRunner {
+public class DbDataInitializer implements CommandLineRunner {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DataLoader.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DbDataInitializer.class);
     private final RoleRepository roleRepository;
     private final EmployeeRepository employeeRepository;
     private final OfferRepository offerRepository;
 
     @Autowired
-    public DataLoader(RoleRepository roleRepository, EmployeeRepository employeeRepository, OfferRepository offerRepository) {
+    public DbDataInitializer(RoleRepository roleRepository, EmployeeRepository employeeRepository, OfferRepository offerRepository) {
         this.roleRepository = roleRepository;
         this.employeeRepository = employeeRepository;
         this.offerRepository = offerRepository;

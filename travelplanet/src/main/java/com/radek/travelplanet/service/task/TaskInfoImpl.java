@@ -3,16 +3,16 @@ package com.radek.travelplanet.service.task;
 import java.util.concurrent.Future;
 
 class TaskInfoImpl implements TaskInfo {
-    private final String taskId;
+    private final Long taskId;
     private final Future<?> future;
 
-    public TaskInfoImpl(String taskId, Future<?> future) {
+    public TaskInfoImpl(Long taskId, Future<?> future) {
         this.taskId = taskId;
         this.future = future;
     }
 
     @Override
-    public String getTaskId() {
+    public Long getTaskId() {
         return taskId;
     }
 

@@ -32,7 +32,7 @@ public class OffersController {
         LOGGER.info("Watch Offer request received for: {}", offerRequest.getUrl());
 
         Offer offer = new Offer();
-        offer.setName("Example Name");
+        offer.setName(offerRequest.getUrl());
         offer.setOfferStatus(OfferStatus.ACTIVE);
         offer.setFrequency("5");
         offer.setOfferDetails(new HashSet<>());

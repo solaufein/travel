@@ -1,36 +1,49 @@
 package com.radek.travelplanet.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Set;
 
+@Entity
+@Table
 public class Offer implements Serializable {
 
     @Id
-    private String id;
+    @Column
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
+    @NotNull
+    @Column(nullable = false, unique = true)
     private String name;
 
-    @Indexed(unique = true)
+    @NotNull
+    @Column(nullable = false, unique = true)
     private String link;
 
+    @NotNull
+    @Column(nullable = false)
     private String frequency;
 
+    @NotNull
+    @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
     private OfferStatus offerStatus;
 
+    @OneToMany(mappedBy = "offer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @Column
     private Set<OfferDetail> offerDetails;
 
     public Offer() {
         offerStatus = OfferStatus.ACTIVE;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
