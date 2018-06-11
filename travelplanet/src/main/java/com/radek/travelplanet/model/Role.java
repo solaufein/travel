@@ -21,7 +21,7 @@ public class Role implements Serializable {
     private RoleType roleType;
 
     @ManyToMany(mappedBy = "rolesSet", fetch = FetchType.LAZY)
-    private Set<Employee> employees = new HashSet<>();
+    private Set<UserAccount> userAccounts = new HashSet<>();
 
     public Role() {
         this.roleType = RoleType.USER;
@@ -43,12 +43,12 @@ public class Role implements Serializable {
         this.roleType = roleType;
     }
 
-    public Set<Employee> getEmployees() {
-        return employees;
+    public Set<UserAccount> getUserAccounts() {
+        return userAccounts;
     }
 
-    public void setEmployees(Set<Employee> employees) {
-        this.employees = employees;
+    public void setUserAccounts(Set<UserAccount> userAccounts) {
+        this.userAccounts = userAccounts;
     }
 
     @Override

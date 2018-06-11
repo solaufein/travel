@@ -1,9 +1,9 @@
 package com.radek.travelplanet.service.auth;
 
-import com.radek.travelplanet.model.Employee;
 import com.radek.travelplanet.model.Role;
 import com.radek.travelplanet.model.State;
-import com.radek.travelplanet.repository.EmployeeRepository;
+import com.radek.travelplanet.model.UserAccount;
+import com.radek.travelplanet.repository.UserAccountRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -27,34 +27,32 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private static final Logger LOGGER = Logger.getLogger(UserDetailsServiceImpl.class);
 
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private UserAccountRepository userAccountRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String coreId) throws UsernameNotFoundException {
-        Employee employee = employeeRepository.findByCoreId(coreId);
-        if (employee == null) {
-            LOGGER.error("Employee not found! coreId: " + coreId);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        UserAccount userAccount = userAccountRepository.findByEmail(email);
+        if (userAccount == null) {
+            LOGGER.error("UserAccount not found! email: " + email);
             throw new UsernameNotFoundException("Username not found");
         }
-        LOGGER.debug("Got employee. coreId: " + coreId);
-        boolean enabled = employee.getState() == State.ACTIVE;
+        LOGGER.debug("Got userAccount. email: " + email);
+        boolean enabled = userAccount.getState() == State.ACTIVE;
         boolean accountNonExpired = true;
         boolean credentialsNonExpired = true;
         boolean accountNonLocked = true;
-        Set<Role> roles = employee.getRolesSet();
+        Set<Role> roles = userAccount.getRolesSet();
         if (roles.isEmpty()) {
-            LOGGER.warn("Employee Roles: [EMPTY]");
+            LOGGER.warn("UserAccount Roles: [EMPTY]");
         }
 
-        return new User(
-                employee.getCoreId(),
-                employee.getPassword(),
-                enabled,
-                accountNonExpired,
-                credentialsNonExpired,
-                accountNonLocked,
-                getAuthorities(roles)
-        );
+        return new User(userAccount.getEmail(),
+                        userAccount.getPassword(),
+                        enabled,
+                        accountNonExpired,
+                        credentialsNonExpired,
+                        accountNonLocked,
+                        getAuthorities(roles));
     }
 
     private Collection<? extends GrantedAuthority> getAuthorities(Set<Role> roles) {

@@ -3,6 +3,7 @@ package com.radek.travelplanet.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -31,9 +32,14 @@ public class Offer implements Serializable {
     @Enumerated(value = EnumType.STRING)
     private OfferStatus offerStatus;
 
+    @ManyToOne
+    @JoinColumn
+    @NotNull
+    private UserAccount userAccount;
+
     @OneToMany(mappedBy = "offer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @Column
-    private Set<OfferDetail> offerDetails;
+    private Set<OfferDetail> offerDetails = new HashSet<>();
 
     public Offer() {
         offerStatus = OfferStatus.ACTIVE;
@@ -85,6 +91,14 @@ public class Offer implements Serializable {
 
     public void setOfferDetails(Set<OfferDetail> offerDetails) {
         this.offerDetails = offerDetails;
+    }
+
+    public UserAccount getUserAccount() {
+        return userAccount;
+    }
+
+    public void setUserAccount(UserAccount userAccount) {
+        this.userAccount = userAccount;
     }
 
     @Override

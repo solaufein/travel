@@ -11,7 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table
-public class Employee implements Serializable {
+public class UserAccount implements Serializable {
 
     public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
 
@@ -27,7 +27,7 @@ public class Employee implements Serializable {
     private String lastName;
 
     @Column(nullable = false, unique = true)
-    private String coreId;
+    private String email;
 
     @Column(nullable = false)
     private String password;
@@ -37,13 +37,17 @@ public class Employee implements Serializable {
     @Enumerated(value = EnumType.STRING)
     private State state;
 
+    @OneToMany(mappedBy = "userAccount", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @Column
+    private Set<Offer> offers = new HashSet<>();
+
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "employee_roles",
-            joinColumns = {@JoinColumn(name = "employee_id")},
+    @JoinTable(name = "user_account_role",
+            joinColumns = {@JoinColumn(name = "user_account_id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private Set<Role> rolesSet = new HashSet<>();
 
-    public Employee() {
+    public UserAccount() {
         this.state = State.ACTIVE;
     }
 
@@ -71,12 +75,12 @@ public class Employee implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getCoreId() {
-        return coreId;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCoreId(String coreId) {
-        this.coreId = coreId;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -103,14 +107,22 @@ public class Employee implements Serializable {
         this.rolesSet = rolesSet;
     }
 
+    public Set<Offer> getOffers() {
+        return offers;
+    }
+
+    public void setOffers(Set<Offer> offers) {
+        this.offers = offers;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Employee employee = (Employee) o;
+        UserAccount userAccount = (UserAccount) o;
 
-        return id != null ? id.equals(employee.id) : employee.id == null;
+        return id != null ? id.equals(userAccount.id) : userAccount.id == null;
     }
 
     @Override

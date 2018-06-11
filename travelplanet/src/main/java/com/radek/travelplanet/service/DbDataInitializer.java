@@ -1,7 +1,7 @@
 package com.radek.travelplanet.service;
 
 import com.radek.travelplanet.model.*;
-import com.radek.travelplanet.repository.EmployeeRepository;
+import com.radek.travelplanet.repository.UserAccountRepository;
 import com.radek.travelplanet.repository.OfferRepository;
 import com.radek.travelplanet.repository.RoleRepository;
 import org.slf4j.Logger;
@@ -15,13 +15,13 @@ public class DbDataInitializer implements CommandLineRunner {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DbDataInitializer.class);
     private final RoleRepository roleRepository;
-    private final EmployeeRepository employeeRepository;
+    private final UserAccountRepository userAccountRepository;
     private final OfferRepository offerRepository;
 
     @Autowired
-    public DbDataInitializer(RoleRepository roleRepository, EmployeeRepository employeeRepository, OfferRepository offerRepository) {
+    public DbDataInitializer(RoleRepository roleRepository, UserAccountRepository userAccountRepository, OfferRepository offerRepository) {
         this.roleRepository = roleRepository;
-        this.employeeRepository = employeeRepository;
+        this.userAccountRepository = userAccountRepository;
         this.offerRepository = offerRepository;
     }
 
@@ -30,7 +30,7 @@ public class DbDataInitializer implements CommandLineRunner {
         LOGGER.info("Populating sample data in db.");
 
         offerRepository.deleteAll();
-        employeeRepository.deleteAll();
+        userAccountRepository.deleteAll();
         roleRepository.deleteAll();
 
         Role adminRole = createRole(RoleType.ADMIN);
@@ -38,29 +38,30 @@ public class DbDataInitializer implements CommandLineRunner {
         Role savedAdminRole = roleRepository.save(adminRole);
         Role savedUserRole = roleRepository.save(userRole);
 
-        Employee admin = new Employee();
-        admin.setCoreId("admin");
+        UserAccount admin = new UserAccount();
+        admin.setEmail("admin@gmail.com");
         admin.setFirstName("John");
         admin.setLastName("Smith");
         admin.setState(State.ACTIVE);
         admin.setPassword("admin");
         admin.getRolesSet().add(savedAdminRole);
-        employeeRepository.save(admin);
+        userAccountRepository.save(admin);
 
-        Employee employee = new Employee();
-        employee.setCoreId("user");
-        employee.setFirstName("Jessica");
-        employee.setLastName("White");
-        employee.setState(State.ACTIVE);
-        employee.setPassword("user");
-        employee.getRolesSet().add(savedUserRole);
-        employeeRepository.save(employee);
+        UserAccount user = new UserAccount();
+        user.setEmail("user@gmail.com");
+        user.setFirstName("Jessica");
+        user.setLastName("White");
+        user.setState(State.ACTIVE);
+        user.setPassword("user");
+        user.getRolesSet().add(savedUserRole);
+        userAccountRepository.save(user);
 
         Offer offer = new Offer();
         offer.setFrequency("10");
         offer.setLink("www.google.com");
         offer.setName("Spain Week");
         offer.setOfferStatus(OfferStatus.ACTIVE);
+        offer.setUserAccount(admin);
         offerRepository.save(offer);
 
         LOGGER.info("Data populated in db.");

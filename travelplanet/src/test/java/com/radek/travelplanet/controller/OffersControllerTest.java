@@ -42,7 +42,7 @@ public class OffersControllerTest {
         offerRequest.setUrl("https://www.travelplanet.pl/wczasy/hiszpania/costa-del-sol/benalmadena/playa-bonita--benalmadena,28052018RNBW2591.html?box=hiszpania-last-minute");
         String content = jsonOfferRequest.write(offerRequest).getJson();
 
-        mvc.perform(post("/travel/offers/watch").with(user("admin").password("admin").roles("ADMIN"))
+        mvc.perform(post("/travel/offers/watch").with(user("admin@gmail.com").password("admin").roles("ADMIN"))
                 .content(content)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
@@ -56,7 +56,7 @@ public class OffersControllerTest {
         offerRequest.setUrl("http://www.onet.pl");
         String content = jsonOfferRequest.write(offerRequest).getJson();
 
-        mvc.perform(post("/travel/offers/watch").with(user("admin").password("admin").roles("ADMIN"))
+        mvc.perform(post("/travel/offers/watch").with(user("admin@gmail.com").password("admin").roles("ADMIN"))
                 .content(content)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
