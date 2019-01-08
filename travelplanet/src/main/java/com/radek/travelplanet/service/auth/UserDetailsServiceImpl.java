@@ -4,7 +4,7 @@ import com.radek.travelplanet.model.Role;
 import com.radek.travelplanet.model.State;
 import com.radek.travelplanet.model.UserAccount;
 import com.radek.travelplanet.repository.UserAccountRepository;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,9 +22,8 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
+@Slf4j
 public class UserDetailsServiceImpl implements UserDetailsService {
-
-    private static final Logger LOGGER = Logger.getLogger(UserDetailsServiceImpl.class);
 
     @Autowired
     private UserAccountRepository userAccountRepository;
@@ -33,26 +32,26 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         UserAccount userAccount = userAccountRepository.findByEmail(email);
         if (userAccount == null) {
-            LOGGER.error("UserAccount not found! email: " + email);
+            log.error("UserAccount not found! email: " + email);
             throw new UsernameNotFoundException("Username not found");
         }
-        LOGGER.debug("Got userAccount. email: " + email);
+        log.debug("Got userAccount. email: " + email);
         boolean enabled = userAccount.getState() == State.ACTIVE;
         boolean accountNonExpired = true;
         boolean credentialsNonExpired = true;
         boolean accountNonLocked = true;
         Set<Role> roles = userAccount.getRolesSet();
         if (roles.isEmpty()) {
-            LOGGER.warn("UserAccount Roles: [EMPTY]");
+            log.warn("UserAccount Roles: [EMPTY]");
         }
 
         return new User(userAccount.getEmail(),
-                        userAccount.getPassword(),
-                        enabled,
-                        accountNonExpired,
-                        credentialsNonExpired,
-                        accountNonLocked,
-                        getAuthorities(roles));
+                userAccount.getPassword(),
+                enabled,
+                accountNonExpired,
+                credentialsNonExpired,
+                accountNonLocked,
+                getAuthorities(roles));
     }
 
     private Collection<? extends GrantedAuthority> getAuthorities(Set<Role> roles) {

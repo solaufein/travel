@@ -1,19 +1,18 @@
 package com.radek.travelplanet.service;
 
 import com.radek.travelplanet.model.*;
-import com.radek.travelplanet.repository.UserAccountRepository;
 import com.radek.travelplanet.repository.OfferRepository;
 import com.radek.travelplanet.repository.RoleRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.radek.travelplanet.repository.UserAccountRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
+@Slf4j
 public class DbDataInitializer implements CommandLineRunner {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DbDataInitializer.class);
     private final RoleRepository roleRepository;
     private final UserAccountRepository userAccountRepository;
     private final OfferRepository offerRepository;
@@ -27,7 +26,7 @@ public class DbDataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-        LOGGER.info("Populating sample data in db.");
+        log.info("Populating sample data in db.");
 
         offerRepository.deleteAll();
         userAccountRepository.deleteAll();
@@ -64,7 +63,7 @@ public class DbDataInitializer implements CommandLineRunner {
         offer.setUserAccount(admin);
         offerRepository.save(offer);
 
-        LOGGER.info("Data populated in db.");
+        log.info("Data populated in db.");
     }
 
     private Role createRole(final RoleType roleType) {

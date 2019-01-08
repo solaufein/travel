@@ -3,16 +3,14 @@ package com.radek.travelplanet.service.task;
 import com.radek.travelplanet.exception.OfferException;
 import com.radek.travelplanet.model.Offer;
 import com.radek.travelplanet.service.OfferSite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 public class OfferTask implements Task, ListenableTask {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(OfferTask.class);
 
     private final List<OnSuccessListener> onSuccessListeners = new ArrayList<>();
     private final List<OnFailureListener> onFailureListeners = new ArrayList<>();
@@ -32,13 +30,13 @@ public class OfferTask implements Task, ListenableTask {
             String link = offer.getLink();
             String price = offerSite.getPrice(link);
 
-            LOGGER.info("Offer name: {}, link: {}. price: {}.", offer.getName(), link, price);
+            log.info("Offer name: {}, link: {}. price: {}.", offer.getName(), link, price);
 
             //todo: check change and send mail
             notifySuccess();
         } catch (Exception ex) {
             //todo: add listeners to update status of db Offer and inMemory TaskInfo?
-            LOGGER.error("Exception occured: {}", ex.getMessage());
+            log.error("Exception occured: {}", ex.getMessage());
             notifyFailure();
 
             throw new OfferException("Exception occured: ", ex);

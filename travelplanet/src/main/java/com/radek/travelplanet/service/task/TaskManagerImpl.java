@@ -1,11 +1,10 @@
 package com.radek.travelplanet.service.task;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class TaskManagerImpl implements TaskManager, AutoCloseable {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TaskManagerImpl.class);
     private final TaskRepository taskRepository;
     private final TaskRunner taskRunner;
 
@@ -26,7 +25,7 @@ public class TaskManagerImpl implements TaskManager, AutoCloseable {
         if (taskInfo != null) {
             taskInfo.cancel();
         } else {
-            LOGGER.warn("Not found TaskInfo for taskId: {}", taskId);
+            log.warn("Not found TaskInfo for taskId: {}", taskId);
         }
     }
 

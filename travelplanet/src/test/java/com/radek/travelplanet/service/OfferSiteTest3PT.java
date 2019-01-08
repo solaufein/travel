@@ -16,7 +16,7 @@ public class OfferSiteTest3PT {
         TravelplanetOfferSite travelplanetOfferSite = new TravelplanetOfferSite(new ParserFactory());
         String price = travelplanetOfferSite.getPrice(URL_TRAVEL);
 
-        assertThat(price, Is.is("1899"));
+        assertThat(price, Is.is("2379"));
     }
 
     @Test

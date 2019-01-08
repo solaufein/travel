@@ -5,8 +5,7 @@ import com.radek.travelplanet.model.OfferStatus;
 import com.radek.travelplanet.model.UserAccount;
 import com.radek.travelplanet.repository.UserAccountRepository;
 import com.radek.travelplanet.service.OfferService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +19,8 @@ import java.util.HashSet;
 
 @RepositoryRestController
 @RequestMapping("/travel")
+@Slf4j
 public class OffersController {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(OffersController.class);
 
     private final OfferService offerService;
     private final UserAccountRepository userAccountRepository;
@@ -35,7 +33,7 @@ public class OffersController {
 
     @PostMapping("/offers/watch")
     public ResponseEntity<?> watchOffer(@RequestBody OfferRequest offerRequest) {
-        LOGGER.info("Watch Offer request received for: {}", offerRequest.getUrl());
+        log.info("Watch Offer request received for: {}", offerRequest.getUrl());
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserAccount userAccount = userAccountRepository.findByEmail(auth.getName());
@@ -57,7 +55,7 @@ public class OffersController {
 
 //    @PostMapping("/offers")
 //    public ResponseEntity<?> createOffer(@RequestBody Offer offer) {
-//        LOGGER.info("Custom create offer rest method.");
+//        log.info("Custom create offer rest method.");
 //        Offer savedOffer = offerRepository.save(offer);
 //        URI location = ServletUriComponentsBuilder
 //                .fromCurrentRequest().path("/{id}")
