@@ -2,8 +2,8 @@ package com.radek.travelplanet.service;
 
 import com.radek.travelplanet.model.Offer;
 import com.radek.travelplanet.repository.OfferRepository;
-import com.radek.travelplanet.service.task.TaskFactory;
 import com.radek.travelplanet.service.task.Task;
+import com.radek.travelplanet.service.task.TaskFactory;
 import com.radek.travelplanet.service.task.TaskManager;
 
 public class OfferServiceImpl implements OfferService {
@@ -19,7 +19,7 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public long watchSingle(Offer offer) {
+    public synchronized long watchSingle(Offer offer) {
         Offer savedOffer = offerRepository.save(offer);
         Task task = taskFactory.createTask(savedOffer);
         taskManager.startTask(task);
@@ -27,11 +27,17 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public void watchAll() {
+    public synchronized void watchAll() {
         Iterable<Offer> offers = offerRepository.findAll();
         for (Offer offer : offers) {
             Task task = taskFactory.createTask(offer);
             taskManager.startTask(task);
         }
+    }
+
+    @Override
+    public synchronized void stopWatch(Long taskId) {
+        offerRepository.deleteById(taskId);
+        taskManager.cancelTask(taskId);
     }
 }

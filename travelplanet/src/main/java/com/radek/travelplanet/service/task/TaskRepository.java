@@ -4,5 +4,5 @@ public interface TaskRepository {
 
     void save(TaskInfo taskInfo);
 
-    TaskInfo get(String taskId);
+    TaskInfo get(Long taskId);
 }

@@ -7,4 +7,6 @@ public interface OfferService {
     long watchSingle(Offer offer);
 
     void watchAll();
+
+    void stopWatch(Long taskId);
 }

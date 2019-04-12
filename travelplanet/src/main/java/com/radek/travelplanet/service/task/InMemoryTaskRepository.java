@@ -21,7 +21,7 @@ public class InMemoryTaskRepository implements TaskRepository {
     }
 
     @Override
-    public TaskInfo get(String taskId) {
+    public TaskInfo get(Long taskId) {
         return tasks.get(taskId);
     }
 }
