@@ -4,11 +4,11 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-public class ScheduledTaskRunner implements TaskRunner {
+public class SimpleFixedTaskScheduler implements TaskScheduler {
 
     private final ScheduledExecutorService executorService;
 
-    public ScheduledTaskRunner(ScheduledExecutorService executorService) {
+    public SimpleFixedTaskScheduler(ScheduledExecutorService executorService) {
         this.executorService = executorService;
     }
 

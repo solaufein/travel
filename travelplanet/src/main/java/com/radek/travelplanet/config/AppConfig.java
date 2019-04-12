@@ -11,12 +11,16 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.util.List;
 import java.util.concurrent.Executors;
 
 @Configuration
 @PropertySources({@PropertySource(value = "classpath:override.properties", ignoreResourceNotFound = true)})
+@EnableAsync
+@EnableScheduling
 public class AppConfig {
 
     @Bean
@@ -50,8 +54,8 @@ public class AppConfig {
     }
 
     @Bean
-    public TaskManager taskManager(TaskRepository taskRepository, TaskRunner taskRunner) {
-        return new TaskManagerImpl(taskRepository, taskRunner);
+    public TaskManager taskManager(TaskRepository taskRepository, TaskScheduler taskScheduler) {
+        return new TaskManagerImpl(taskRepository, taskScheduler);
     }
 
     @Bean
@@ -65,7 +69,7 @@ public class AppConfig {
     }
 
     @Bean
-    public TaskRunner taskRunner() {
-        return new ScheduledTaskRunner(Executors.newScheduledThreadPool(4));
+    public TaskScheduler taskRunner() {
+        return new SimpleFixedTaskScheduler(Executors.newScheduledThreadPool(4));
     }
 }

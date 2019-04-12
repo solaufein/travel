@@ -6,16 +6,16 @@ import lombok.extern.slf4j.Slf4j;
 public class TaskManagerImpl implements TaskManager, AutoCloseable {
 
     private final TaskRepository taskRepository;
-    private final TaskRunner taskRunner;
+    private final TaskScheduler taskScheduler;
 
-    public TaskManagerImpl(TaskRepository taskRepository, TaskRunner taskRunner) {
+    public TaskManagerImpl(TaskRepository taskRepository, TaskScheduler taskScheduler) {
         this.taskRepository = taskRepository;
-        this.taskRunner = taskRunner;
+        this.taskScheduler = taskScheduler;
     }
 
     @Override
     public void startTask(Task task) {
-        TaskInfo taskInfo = taskRunner.execute(task);
+        TaskInfo taskInfo = taskScheduler.execute(task);
         taskRepository.save(taskInfo);
     }
 
@@ -31,6 +31,6 @@ public class TaskManagerImpl implements TaskManager, AutoCloseable {
 
     @Override
     public void close() {
-        taskRunner.close();
+        taskScheduler.close();
     }
 }

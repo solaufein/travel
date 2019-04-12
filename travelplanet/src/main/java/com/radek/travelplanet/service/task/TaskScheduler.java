@@ -1,6 +1,6 @@
 package com.radek.travelplanet.service.task;
 
-public interface TaskRunner {
+public interface TaskScheduler {
     void close();
 
     TaskInfo execute(Task task);
