@@ -1,7 +1,7 @@
 package com.radek.travelplanet.model;
 
 public enum OfferStatus {
-    INACTIVE(0), ACTIVE(1);
+    INACTIVE(0), ACTIVE(1), FAILED(2);
 
     private final int value;
 

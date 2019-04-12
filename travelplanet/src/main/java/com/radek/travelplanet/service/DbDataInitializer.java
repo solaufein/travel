@@ -57,8 +57,8 @@ public class DbDataInitializer implements CommandLineRunner {
 
         Offer offer = new Offer();
         offer.setFrequency("4");
-        offer.setLink("https://www.travelplanet.pl/wczasy/egipt/hurghada/hurghada/cooee-prima-life-makadi-bay,22042019VITX2810.html?box=super-last-minute");
-        offer.setName("Egipt Week");
+        offer.setLink("https://www.itaka.pl/wczasy/tunezja/djerba/hotel-meninx-djerba,DJEMENI.html?ofr_id=937f3d2698cc55c95b1423bd5627ffd7d720b63a103dc445e2d2a2393b88984f");
+        offer.setName("ITAKA Shit Week");
         offer.setOfferStatus(OfferStatus.ACTIVE);
         offer.setUserAccount(admin);
         offerRepository.save(offer);

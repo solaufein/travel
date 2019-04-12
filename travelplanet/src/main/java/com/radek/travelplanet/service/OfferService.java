@@ -4,9 +4,13 @@ import com.radek.travelplanet.model.Offer;
 
 public interface OfferService {
 
-    long watchSingle(Offer offer);
+    long watchNew(Offer offer);
 
     void watchAll();
 
-    void stopWatch(Long taskId);
+    void stopWatching(Long taskId);
+
+    void startWatching(Long taskId);
+
+    void removeFromWatched(Long taskId);
 }

@@ -49,8 +49,13 @@ public class AppConfig {
     }
 
     @Bean
-    public TaskFactory taskFactory(PriceStrategyRegistry priceStrategyRegistry) {
-        return new TaskFactory(priceStrategyRegistry);
+    public TaskFactory taskFactory(PriceStrategyRegistry priceStrategyRegistry, List<OnFailureListener> onFailureListeners) {
+        return new TaskFactory(priceStrategyRegistry, onFailureListeners);
+    }
+
+    @Bean
+    public OnFailureListenerImpl onFailureListener(TaskManager taskManager, OfferRepository offerRepository) {
+        return new OnFailureListenerImpl(taskManager, offerRepository);
     }
 
     @Bean

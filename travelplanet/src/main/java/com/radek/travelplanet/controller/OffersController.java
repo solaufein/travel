@@ -54,8 +54,8 @@ public class OffersController {
         offer2.setLink("https://www.travelplanet.pl/wczasy/egipt/hurghada/hurghada/amc-royal--ex-amc-azur-resort,22042019VITX23176.html?box=super-last-minute");
         offer2.setUserAccount(userAccount);
 
-        long id = offerService.watchSingle(offer);
-        offerService.watchSingle(offer2);
+        long id = offerService.watchNew(offer);
+        offerService.watchNew(offer2);
 
         return ResponseEntity.ok(id);
     }

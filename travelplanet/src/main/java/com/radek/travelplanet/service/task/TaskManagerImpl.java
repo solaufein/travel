@@ -23,10 +23,17 @@ public class TaskManagerImpl implements TaskManager, AutoCloseable {
     public void cancelTask(Long taskId) {
         TaskInfo taskInfo = taskRepository.get(taskId);
         if (taskInfo != null) {
-            taskInfo.cancel();
+            if (!taskInfo.isCancelled()) {
+                taskInfo.cancel();
+            }
         } else {
             log.warn("Not found TaskInfo for taskId: {}", taskId);
         }
+    }
+
+    @Override
+    public void removeTask(Long taskId) {
+        taskRepository.remove(taskId);
     }
 
     @Override
