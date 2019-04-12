@@ -7,16 +7,16 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
-public class TravelplanetOfferSiteTest {
+public class TravelplanetPriceStrategyTest {
     private static final String TRAVELPLANET_URL = "http://www.travelplanet.pl/blabla/bla";
     private static final String UNKNOWN_URL = "http://www.onet.pl/blabla/bla";
 
     @Test
     public void shouldReturnInfoIfSiteMatchesGivenUrl() {
-        TravelplanetOfferSite offerSite = new TravelplanetOfferSite(mock(ParserFactory.class));
+        TravelplanetPriceStrategy strategy = new TravelplanetPriceStrategy(mock(ParserFactory.class));
 
-        assertTrue(offerSite.matches(TRAVELPLANET_URL));
-        assertFalse(offerSite.matches(UNKNOWN_URL));
+        assertTrue(strategy.matches(TRAVELPLANET_URL));
+        assertFalse(strategy.matches(UNKNOWN_URL));
     }
 
 }

@@ -24,18 +24,18 @@ import java.util.concurrent.Executors;
 public class AppConfig {
 
     @Bean
-    public OfferService offerService(OfferTaskFactory offerTaskFactory, TaskManager taskManager, OfferRepository offerRepository) {
-        return new OfferServiceImpl(offerTaskFactory, taskManager, offerRepository);
+    public OfferService offerService(TaskFactory taskFactory, TaskManager taskManager, OfferRepository offerRepository) {
+        return new OfferServiceImpl(taskFactory, taskManager, offerRepository);
     }
 
     @Bean
-    public OfferSite travelplanetOfferSite(ParserFactory parserFactory) {
-        return new TravelplanetOfferSite(parserFactory);
+    public PriceStrategy travelplanetPriceStrategy(ParserFactory parserFactory) {
+        return new TravelplanetPriceStrategy(parserFactory);
     }
 
     @Bean
-    public OfferSite itakaOfferSite(ParserFactory parserFactory) {
-        return new ItakaOfferSite(parserFactory);
+    public PriceStrategy itakaPriceStrategy(ParserFactory parserFactory) {
+        return new ItakaPriceStrategy(parserFactory);
     }
 
     @Bean
@@ -44,13 +44,13 @@ public class AppConfig {
     }
 
     @Bean
-    public OfferSiteResolver offerSiteResolver(List<OfferSite> offerSites) {
-        return new OfferSiteResolver(offerSites);
+    public PriceStrategyRegistry priceStrategyRegistry(List<PriceStrategy> sitePriceStrategies) {
+        return new PriceStrategyRegistry(sitePriceStrategies);
     }
 
     @Bean
-    public OfferTaskFactory offerTaskFactory(OfferSiteResolver offerSiteResolver) {
-        return new OfferTaskFactory(offerSiteResolver);
+    public TaskFactory taskFactory(PriceStrategyRegistry priceStrategyRegistry) {
+        return new TaskFactory(priceStrategyRegistry);
     }
 
     @Bean

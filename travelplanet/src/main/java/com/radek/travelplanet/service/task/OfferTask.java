@@ -1,8 +1,7 @@
 package com.radek.travelplanet.service.task;
 
 import com.radek.travelplanet.exception.OfferException;
-import com.radek.travelplanet.model.Offer;
-import com.radek.travelplanet.service.OfferSite;
+import com.radek.travelplanet.service.PriceStrategy;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -14,28 +13,27 @@ public class OfferTask implements Task, ListenableTask {
 
     private final List<OnSuccessListener> onSuccessListeners = new ArrayList<>();
     private final List<OnFailureListener> onFailureListeners = new ArrayList<>();
-    private final Offer offer;
-    private final OfferSite offerSite;
-    private long initialDelay = 3L;
+    private final TaskData taskData;
+    private final PriceStrategy priceStrategy;
     private TaskStatus taskStatus = TaskStatus.SUBMITTED;
 
-    public OfferTask(Offer offer, OfferSite offerSite) {
-        this.offer = offer;
-        this.offerSite = offerSite;
+    public OfferTask(TaskData taskData, PriceStrategy priceStrategy) {
+        this.taskData = taskData;
+        this.priceStrategy = priceStrategy;
     }
 
     @Override
     public void run() {
         try {
-            String link = offer.getLink();
-            String price = offerSite.getPrice(link);
+            String link = taskData.getLink();
+            String price = priceStrategy.getPrice(link);
 
-            log.info("Offer name: {}, link: {}. price: {}.", offer.getName(), link, price);
+            log.info("Offer name: {}, link: {}. price: {}.", taskData.getName(), link, price);
 
-            //todo: check change and send mail
+            //todo: check price change and send mail
             notifySuccess();
         } catch (Exception ex) {
-            //todo: add listeners to update status of db Offer and inMemory TaskInfo?
+            //todo: update status of db Offer and inMemory TaskInfo?
             log.error("Exception occured: {}", ex.getMessage());
             notifyFailure();
 
@@ -45,17 +43,17 @@ public class OfferTask implements Task, ListenableTask {
 
     @Override
     public Long getId() {
-        return offer.getId();
+        return taskData.getId();
     }
 
     @Override
     public long getFrequency() {
-        return Long.parseLong(offer.getFrequency());
+        return Long.parseLong(taskData.getFrequency());
     }
 
     @Override
     public long getInitialDelay() {
-        return initialDelay;
+        return taskData.getInitialDelay();
     }
 
     @Override
@@ -81,10 +79,6 @@ public class OfferTask implements Task, ListenableTask {
     @Override
     public void register(OnFailureListener listener) {
         this.onFailureListeners.add(listener);
-    }
-
-    void setInitialDelay(long initialDelay) {
-        this.initialDelay = initialDelay;
     }
 
     private void notifyFailure() {

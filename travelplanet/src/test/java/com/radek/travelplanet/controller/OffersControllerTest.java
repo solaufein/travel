@@ -50,7 +50,7 @@ public class OffersControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
-        Thread.sleep(8000);    //todo: remove
+        Thread.sleep(18000);    //todo: remove
     }
 
     @Test

@@ -2,14 +2,14 @@ package com.radek.travelplanet.service;
 
 import com.radek.travelplanet.util.DomainUtil;
 
-public interface OfferSite {
+public interface PriceStrategy {
 
     String getPrice(String url);
 
     String getDomain();
 
-    default boolean matches(String siteUrl) {
-        String domainName = DomainUtil.getDomainName(siteUrl);
+    default boolean matches(String url) {
+        String domainName = DomainUtil.getDomainName(url);
         return this.getDomain().equals(domainName);
     }
 }

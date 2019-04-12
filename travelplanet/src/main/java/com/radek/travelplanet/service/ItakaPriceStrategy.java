@@ -4,13 +4,13 @@ import com.radek.travelplanet.service.parser.HtmlParser;
 import com.radek.travelplanet.service.parser.ParserFactory;
 import com.radek.travelplanet.util.NumberUtil;
 
-public class TravelplanetOfferSite implements OfferSite {
+public class ItakaPriceStrategy implements PriceStrategy {
 
-    private static final String DOMAIN = "travelplanet.pl";
-    private static final String PRICE_ID_TAG = "gnc--ttip--toggle";
+    private static final String DOMAIN = "itaka.pl";
+    private static final String PRICE_CLASS_TAG = "price price-box_price";
     private final ParserFactory parserFactory;
 
-    public TravelplanetOfferSite(ParserFactory parserFactory) {
+    public ItakaPriceStrategy(ParserFactory parserFactory) {
         this.parserFactory = parserFactory;
     }
 
@@ -22,7 +22,7 @@ public class TravelplanetOfferSite implements OfferSite {
     @Override
     public String getPrice(String url) {
         HtmlParser htmlParser = parserFactory.createHtmlParser(url);
-        String idTagPrice = htmlParser.parseIdTag(PRICE_ID_TAG);
+        String idTagPrice = htmlParser.parseClassTag(PRICE_CLASS_TAG);
         return NumberUtil.findTextNumber(idTagPrice);
     }
 }

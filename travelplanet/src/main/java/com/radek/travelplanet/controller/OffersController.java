@@ -41,12 +41,23 @@ public class OffersController {
         Offer offer = new Offer();
         offer.setName(offerRequest.getUrl());
         offer.setOfferStatus(OfferStatus.ACTIVE);
-        offer.setFrequency("5");
+        offer.setFrequency("2");
         offer.setOfferDetails(new HashSet<>());
         offer.setLink(offerRequest.getUrl());
         offer.setUserAccount(userAccount);
 
-        offerService.watch(offer);
+        Offer offer2 = new Offer();
+        offer2.setName("https://www.travelplanet.pl/wczasy/egipt/hurghada/hurghada/amc-royal--ex-amc-azur-resort,22042019VITX23176.html?box=super-last-minute");
+        offer2.setOfferStatus(OfferStatus.ACTIVE);
+        offer2.setFrequency("3");
+        offer2.setOfferDetails(new HashSet<>());
+        offer2.setLink("https://www.travelplanet.pl/wczasy/egipt/hurghada/hurghada/amc-royal--ex-amc-azur-resort,22042019VITX23176.html?box=super-last-minute");
+        offer2.setUserAccount(userAccount);
+
+        //https://www.travelplanet.pl/wczasy/egipt/hurghada/hurghada/amc-royal--ex-amc-azur-resort,22042019VITX23176.html?box=super-last-minute
+
+        offerService.watchSingle(offer);
+        offerService.watchSingle(offer2);
 
         return ResponseEntity.ok().build();
     }
