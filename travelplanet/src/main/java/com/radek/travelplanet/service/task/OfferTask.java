@@ -34,10 +34,10 @@ public class OfferTask implements Task, ListenableTask {
             notifySuccess();
         } catch (Exception ex) {
             //todo: update status of db Offer and inMemory TaskInfo?
-            log.error("Exception occured: {}", ex.getMessage());
+            log.error("Exception occurred: {}", ex.getMessage());
             notifyFailure();
 
-            throw new OfferException("Exception occured: ", ex);
+            throw new OfferException("Exception occurred: ", ex);
         }
     }
 

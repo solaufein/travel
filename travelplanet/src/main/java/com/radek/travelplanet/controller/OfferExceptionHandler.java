@@ -16,8 +16,8 @@ public class OfferExceptionHandler {
     @ExceptionHandler(OfferException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorMessage handleAuthenticationException(OfferException ex) {
-        log.debug("Internal OfferService exception occured.");
+    public ErrorMessage handleInternalAppException(OfferException ex) {
+        log.debug("Internal OfferService exception occurred.");
         return new ErrorMessage(ex.getMessage(), "offer.error.internal");
     }
 
