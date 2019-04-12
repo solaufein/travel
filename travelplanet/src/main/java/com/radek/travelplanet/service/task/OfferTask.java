@@ -28,7 +28,7 @@ public class OfferTask implements Task, ListenableTask {
             String link = taskData.getLink();
             String price = priceStrategy.getPrice(link);
 
-            log.info("Offer name: {}, link: {}. price: {}.", taskData.getName(), link, price);
+            log.info("Offer name: {}, price: {}. link: {}.", taskData.getName(), price, link);
 
             //todo: check price change and send mail
             notifySuccess();

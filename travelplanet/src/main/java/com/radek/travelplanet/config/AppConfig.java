@@ -72,4 +72,9 @@ public class AppConfig {
     public TaskScheduler taskRunner() {
         return new SimpleFixedTaskScheduler(Executors.newScheduledThreadPool(4));
     }
+
+    @Bean
+    public ApplicationStartEventListener applicationStartEventListener(OfferService offerService) {
+        return new ApplicationStartEventListener(offerService);
+    }
 }

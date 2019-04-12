@@ -25,7 +25,7 @@ public class DbDataInitializer implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... strings) throws Exception {
+    public void run(String... strings) {
         log.info("Populating sample data in db.");
 
         offerRepository.deleteAll();
@@ -56,9 +56,9 @@ public class DbDataInitializer implements CommandLineRunner {
         userAccountRepository.save(user);
 
         Offer offer = new Offer();
-        offer.setFrequency("10");
-        offer.setLink("www.google.com");
-        offer.setName("Spain Week");
+        offer.setFrequency("4");
+        offer.setLink("https://www.travelplanet.pl/wczasy/egipt/hurghada/hurghada/cooee-prima-life-makadi-bay,22042019VITX2810.html?box=super-last-minute");
+        offer.setName("Egipt Week");
         offer.setOfferStatus(OfferStatus.ACTIVE);
         offer.setUserAccount(admin);
         offerRepository.save(offer);
