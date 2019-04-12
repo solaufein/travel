@@ -19,10 +19,11 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public void watchSingle(Offer offer) {
+    public long watchSingle(Offer offer) {
         Offer savedOffer = offerRepository.save(offer);
         Task task = taskFactory.createTask(savedOffer);
         taskManager.startTask(task);
+        return savedOffer.getId();
     }
 
     @Override

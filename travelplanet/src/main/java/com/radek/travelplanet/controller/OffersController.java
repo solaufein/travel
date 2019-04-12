@@ -56,23 +56,9 @@ public class OffersController {
 
         //https://www.travelplanet.pl/wczasy/egipt/hurghada/hurghada/amc-royal--ex-amc-azur-resort,22042019VITX23176.html?box=super-last-minute
 
-        offerService.watchSingle(offer);
+        long id = offerService.watchSingle(offer);
         offerService.watchSingle(offer2);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(id);
     }
-
-//    CUSTOM POST METHOD: (has drawbacks - no hal ?)
-
-//    @PostMapping("/offers")
-//    public ResponseEntity<?> createOffer(@RequestBody Offer offer) {
-//        log.info("Custom create offer rest method.");
-//        Offer savedOffer = offerRepository.save(offer);
-//        URI location = ServletUriComponentsBuilder
-//                .fromCurrentRequest().path("/{id}")
-//                .buildAndExpand(savedOffer.getId()).toUri();
-//
-////        return ResponseEntity.created(location).build();
-//        return ResponseEntity.ok(savedOffer);
-//    }
 }
