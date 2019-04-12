@@ -43,7 +43,14 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public synchronized void stopWatching(Long taskId) {
         taskManager.cancelTask(taskId);
-        offerRepository.findById(taskId).ifPresent(this::setInactive);
+        offerRepository.findById(taskId).ifPresent(offer -> {
+            if (offer.getOfferStatus() == OfferStatus.ACTIVE) {
+                offer.setOfferStatus(OfferStatus.INACTIVE);
+                offerRepository.save(offer);
+            } else {
+                log.warn("Cannot stop watching (inactive) because status is: {}", offer.getOfferStatus());
+            }
+        });
     }
 
     @Override
@@ -53,7 +60,7 @@ public class OfferServiceImpl implements OfferService {
                 offer.setOfferStatus(OfferStatus.ACTIVE);
                 watchNew(offer);
             } else {
-                log.warn("Cannot start watching because status is: {}", offer.getOfferStatus());
+                log.warn("Cannot start watching (active) because status is: {}", offer.getOfferStatus());
             }
         });
     }
@@ -65,8 +72,4 @@ public class OfferServiceImpl implements OfferService {
         taskManager.removeTask(taskId);
     }
 
-    private void setInactive(Offer offer) {
-        offer.setOfferStatus(OfferStatus.INACTIVE);
-        offerRepository.save(offer);
-    }
 }

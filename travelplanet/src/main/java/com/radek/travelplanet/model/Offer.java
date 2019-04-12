@@ -41,6 +41,9 @@ public class Offer implements Serializable {
     @Column
     private Set<OfferDetail> offerDetails = new HashSet<>();
 
+    @Column
+    private String failMessage;
+
     public Offer() {
         offerStatus = OfferStatus.ACTIVE;
     }
@@ -99,6 +102,14 @@ public class Offer implements Serializable {
 
     public void setUserAccount(UserAccount userAccount) {
         this.userAccount = userAccount;
+    }
+
+    public void setFailMessage(String failMessage) {
+        this.failMessage = failMessage;
+    }
+
+    public String getFailMessage() {
+        return failMessage;
     }
 
     @Override

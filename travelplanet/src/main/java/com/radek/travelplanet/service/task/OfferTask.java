@@ -1,7 +1,9 @@
 package com.radek.travelplanet.service.task;
 
 import com.radek.travelplanet.exception.OfferException;
-import com.radek.travelplanet.service.PriceStrategy;
+import com.radek.travelplanet.service.strategy.PriceStrategy;
+import com.radek.travelplanet.service.task.listener.OnFailureListener;
+import com.radek.travelplanet.service.task.listener.OnSuccessListener;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -25,17 +27,17 @@ public class OfferTask implements Task, ListenableTask {
     @Override
     public void run() {
         try {
+            long id = taskData.getId();
             String link = taskData.getLink();
             String price = priceStrategy.getPrice(link);
+            String name = taskData.getName();
 
-            log.info("Offer name: {}, price: {}. link: {}.", taskData.getName(), price, link);
+            log.info("Offer name: {}, price: {}. link: {}.", name, price, link);
 
-            //todo: check price change and send mail
-            notifySuccess();
+            notifySuccess(price, id, link, name);
         } catch (Exception ex) {
-            //todo: update status of db Offer and inMemory TaskInfo?
             log.error("Exception occurred: {}", ex.getMessage());
-            notifyFailure();
+            notifyFailure(ex);
 
             throw new OfferException("Exception occurred: ", ex);
         }
@@ -81,11 +83,11 @@ public class OfferTask implements Task, ListenableTask {
         this.onFailureListeners.add(listener);
     }
 
-    private void notifyFailure() {
-        onFailureListeners.forEach(l -> l.onFailure(this));
+    private void notifyFailure(Exception ex) {
+        onFailureListeners.forEach(l -> l.onFailure(this, ex));
     }
 
-    private void notifySuccess() {
-        onSuccessListeners.forEach(l -> l.onSuccess());
+    private void notifySuccess(String price, long id, String link, String name) {
+        onSuccessListeners.forEach(l -> l.onSuccess(price, id, link, name));
     }
 }

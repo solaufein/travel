@@ -1,6 +1,8 @@
 package com.radek.travelplanet.service;
 
 import com.radek.travelplanet.service.parser.ParserFactory;
+import com.radek.travelplanet.service.strategy.ItakaPriceStrategy;
+import com.radek.travelplanet.service.strategy.TravelplanetPriceStrategy;
 import org.hamcrest.core.Is;
 import org.junit.Test;
 

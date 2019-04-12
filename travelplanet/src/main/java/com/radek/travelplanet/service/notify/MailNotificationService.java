@@ -12,9 +12,8 @@ public class MailNotificationService implements NotificationService {
     }
 
     @Override
-    public void onOfferChange() {
-        //todo: implement
-        SimpleMailMessage message = createMessage("", "", "");
+    public void onOfferChange(String to, String subject, String text) {
+        SimpleMailMessage message = createMessage(to, subject, text);
         mailSender.send(message);   //todo: ex handling
     }
 

@@ -1,4 +1,4 @@
-package com.radek.travelplanet.service;
+package com.radek.travelplanet.service.strategy;
 
 import com.radek.travelplanet.exception.OfferException;
 

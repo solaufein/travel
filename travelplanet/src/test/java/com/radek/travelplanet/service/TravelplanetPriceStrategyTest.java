@@ -1,6 +1,7 @@
 package com.radek.travelplanet.service;
 
 import com.radek.travelplanet.service.parser.ParserFactory;
+import com.radek.travelplanet.service.strategy.TravelplanetPriceStrategy;
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;

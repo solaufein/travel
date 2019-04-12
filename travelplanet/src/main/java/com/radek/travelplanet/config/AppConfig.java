@@ -1,11 +1,21 @@
 package com.radek.travelplanet.config;
 
 import com.radek.travelplanet.repository.OfferRepository;
-import com.radek.travelplanet.service.*;
+import com.radek.travelplanet.service.ApplicationStartEventListener;
+import com.radek.travelplanet.service.OfferService;
+import com.radek.travelplanet.service.OfferServiceImpl;
 import com.radek.travelplanet.service.notify.MailNotificationService;
 import com.radek.travelplanet.service.notify.NotificationService;
 import com.radek.travelplanet.service.parser.ParserFactory;
+import com.radek.travelplanet.service.strategy.ItakaPriceStrategy;
+import com.radek.travelplanet.service.strategy.PriceStrategy;
+import com.radek.travelplanet.service.strategy.PriceStrategyRegistry;
+import com.radek.travelplanet.service.strategy.TravelplanetPriceStrategy;
 import com.radek.travelplanet.service.task.*;
+import com.radek.travelplanet.service.task.listener.OnFailureListener;
+import com.radek.travelplanet.service.task.listener.OnFailureListenerImpl;
+import com.radek.travelplanet.service.task.listener.OnSuccessListener;
+import com.radek.travelplanet.service.task.listener.OnSuccessListenerImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -49,13 +59,18 @@ public class AppConfig {
     }
 
     @Bean
-    public TaskFactory taskFactory(PriceStrategyRegistry priceStrategyRegistry, List<OnFailureListener> onFailureListeners) {
-        return new TaskFactory(priceStrategyRegistry, onFailureListeners);
+    public TaskFactory taskFactory(PriceStrategyRegistry priceStrategyRegistry, List<OnFailureListener> onFailureListeners, List<OnSuccessListener> onSuccessListeners) {
+        return new TaskFactory(priceStrategyRegistry, onFailureListeners, onSuccessListeners);
     }
 
     @Bean
     public OnFailureListenerImpl onFailureListener(TaskManager taskManager, OfferRepository offerRepository) {
         return new OnFailureListenerImpl(taskManager, offerRepository);
+    }
+
+    @Bean
+    public OnSuccessListener onSuccessListener(OfferRepository offerRepository, NotificationService notificationService) {
+        return new OnSuccessListenerImpl(offerRepository, notificationService);
     }
 
     @Bean
