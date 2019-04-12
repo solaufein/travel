@@ -17,16 +17,18 @@ public class OfferTask implements Task, ListenableTask {
     private final List<OnFailureListener> onFailureListeners = new ArrayList<>();
     private final TaskData taskData;
     private final PriceStrategy priceStrategy;
-    private TaskStatus taskStatus = TaskStatus.SUBMITTED;
+    private TaskStatus taskStatus;
 
     public OfferTask(TaskData taskData, PriceStrategy priceStrategy) {
         this.taskData = taskData;
         this.priceStrategy = priceStrategy;
+        this.taskStatus = TaskStatus.SUBMITTED;
     }
 
     @Override
     public void run() {
         try {
+            updateStatus(TaskStatus.ACTIVE);
             long id = taskData.getId();
             String link = taskData.getLink();
             String price = priceStrategy.getPrice(link);

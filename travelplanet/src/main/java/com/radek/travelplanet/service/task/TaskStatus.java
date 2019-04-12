@@ -1,5 +1,5 @@
 package com.radek.travelplanet.service.task;
 
 public enum TaskStatus {
-    SUBMITTED, IN_PROGRESS, COMPLETED, FAILED
+    SUBMITTED, ACTIVE, INACTIVE, FAILED
 }

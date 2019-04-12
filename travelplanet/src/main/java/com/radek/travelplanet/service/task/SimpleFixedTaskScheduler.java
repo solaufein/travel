@@ -15,7 +15,7 @@ public class SimpleFixedTaskScheduler implements TaskScheduler {
     @Override
     public TaskInfo execute(Task task) {
         ScheduledFuture<?> scheduledFuture = executorService.scheduleAtFixedRate(task, task.getInitialDelay(), task.getFrequency(), task.getTimeUnit());
-        return new TaskInfoImpl(task.getId(), scheduledFuture);
+        return new TaskInfoImpl(task.getId(), scheduledFuture); //todo: add reference to Task status?
     }
 
     @Override
