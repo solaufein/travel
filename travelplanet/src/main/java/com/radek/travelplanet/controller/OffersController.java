@@ -1,5 +1,6 @@
 package com.radek.travelplanet.controller;
 
+import com.radek.travelplanet.controller.model.OfferDTO;
 import com.radek.travelplanet.model.Offer;
 import com.radek.travelplanet.model.OfferStatus;
 import com.radek.travelplanet.model.UserAccount;
@@ -7,14 +8,16 @@ import com.radek.travelplanet.repository.UserAccountRepository;
 import com.radek.travelplanet.service.OfferService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.security.Principal;
 import java.util.HashSet;
 
 @RepositoryRestController
@@ -31,12 +34,17 @@ public class OffersController {
         this.userAccountRepository = userAccountRepository;
     }
 
-    @PostMapping("/offers/watch")
-    public ResponseEntity<?> watchOffer(@RequestBody OfferRequest offerRequest) {
+    @GetMapping("/offers")
+    public ResponseEntity<?> getAllOffers(Pageable pageable, Principal principal) {
+        Page<OfferDTO> offers = offerService.getAllOffers(principal.getName(), pageable);
+        return ResponseEntity.ok(offers);
+    }
+
+    @PostMapping("/offers")
+    public ResponseEntity<?> watchOffer(@RequestBody OfferRequest offerRequest, Principal principal) {
         log.info("Watch Offer request received for: {}", offerRequest.getUrl());
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        UserAccount userAccount = userAccountRepository.findByEmail(auth.getName());
+        UserAccount userAccount = userAccountRepository.findByEmail(principal.getName());
 
         Offer offer = new Offer();
         offer.setName("Request offer");

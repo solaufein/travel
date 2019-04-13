@@ -28,7 +28,7 @@ public class OfferTask implements Task, ListenableTask {
     @Override
     public void run() {
         try {
-            updateStatus(TaskStatus.ACTIVE);
+            updateStatus(TaskStatus.IN_PROGRESS);
             long id = taskData.getId();
             String link = taskData.getLink();
             String price = priceStrategy.getPrice(link);

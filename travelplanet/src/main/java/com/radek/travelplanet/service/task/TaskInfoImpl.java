@@ -3,17 +3,18 @@ package com.radek.travelplanet.service.task;
 import java.util.concurrent.Future;
 
 class TaskInfoImpl implements TaskInfo {
-    private final Long taskId;
+
+    private final Task task;
     private final Future<?> future;
 
-    public TaskInfoImpl(Long taskId, Future<?> future) {
-        this.taskId = taskId;
+    public TaskInfoImpl(Task task, Future<?> future) {
+        this.task = task;
         this.future = future;
     }
 
     @Override
     public Long getTaskId() {
-        return taskId;
+        return task.getId();
     }
 
     @Override
@@ -29,5 +30,10 @@ class TaskInfoImpl implements TaskInfo {
     @Override
     public void cancel() {
         future.cancel(false);
+    }
+
+    @Override
+    public TaskStatus getTaskStatus() {
+        return task.getStatus();
     }
 }

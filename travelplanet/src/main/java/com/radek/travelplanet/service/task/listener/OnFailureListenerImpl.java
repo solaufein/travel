@@ -25,6 +25,7 @@ public class OnFailureListenerImpl implements OnFailureListener {
         log.info("onFailure invoked for task with id: {}", taskId);
         task.updateStatus(TaskStatus.FAILED);
         taskManager.cancelTask(taskId);
+        taskManager.removeTask(taskId);
         offerRepository.findById(taskId).ifPresent(offer -> setFailed(offer, ex.getMessage()));
     }
 

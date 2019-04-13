@@ -2,6 +2,8 @@ package com.radek.travelplanet.service.task;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Optional;
+
 @Slf4j
 public class TaskManagerImpl implements TaskManager, AutoCloseable {
 
@@ -34,6 +36,13 @@ public class TaskManagerImpl implements TaskManager, AutoCloseable {
     @Override
     public void removeTask(Long taskId) {
         taskRepository.remove(taskId);
+    }
+
+    @Override
+    public Optional<TaskStatus> getTaskStatus(Long taskId) {
+        TaskInfo taskInfo = taskRepository.get(taskId);
+        return Optional.ofNullable(taskInfo)
+                .flatMap(info -> Optional.ofNullable(info.getTaskStatus()));
     }
 
     @Override
