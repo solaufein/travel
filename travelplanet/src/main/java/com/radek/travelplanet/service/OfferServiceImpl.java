@@ -1,9 +1,12 @@
 package com.radek.travelplanet.service;
 
+import com.radek.travelplanet.controller.OfferRequest;
 import com.radek.travelplanet.controller.model.OfferDTO;
 import com.radek.travelplanet.model.Offer;
 import com.radek.travelplanet.model.OfferStatus;
+import com.radek.travelplanet.model.UserAccount;
 import com.radek.travelplanet.repository.OfferRepository;
+import com.radek.travelplanet.repository.UserAccountRepository;
 import com.radek.travelplanet.service.task.Task;
 import com.radek.travelplanet.service.task.TaskFactory;
 import com.radek.travelplanet.service.task.TaskManager;
@@ -18,11 +21,13 @@ public class OfferServiceImpl implements OfferService {
     private final TaskFactory taskFactory;
     private final TaskManager taskManager;
     private final OfferRepository offerRepository;
+    private final UserAccountRepository userAccountRepository;
 
-    public OfferServiceImpl(TaskFactory taskFactory, TaskManager taskManager, OfferRepository offerRepository) {
+    public OfferServiceImpl(TaskFactory taskFactory, TaskManager taskManager, OfferRepository offerRepository, UserAccountRepository userAccountRepository) {
         this.taskFactory = taskFactory;
         this.taskManager = taskManager;
         this.offerRepository = offerRepository;
+        this.userAccountRepository = userAccountRepository;
     }
 
     @Override
@@ -34,14 +39,16 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public synchronized long watchNew(Offer offer) {
-        Offer savedOffer = offerRepository.save(offer);
-        Task task = taskFactory.createTask(savedOffer);
-        taskManager.startTask(task);
+    @Transactional
+    public synchronized long watchNew(OfferRequest offerRequest, String userEmail) {
+        Offer offer = createNewOffer(offerRequest, userEmail);
+        Offer savedOffer = watchNew(offer);
+
         return savedOffer.getId();
     }
 
     @Override
+    @Transactional
     public synchronized void watchAll() {
         Iterable<Offer> offers = offerRepository.findAll();
         for (Offer offer : offers) {
@@ -53,6 +60,7 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
+    @Transactional
     public synchronized void stopWatching(Long taskId) {
         taskManager.cancelTask(taskId);
         taskManager.removeTask(taskId);
@@ -67,6 +75,7 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
+    @Transactional
     public synchronized void startWatching(Long taskId) {
         offerRepository.findById(taskId).ifPresent(offer -> {
             if (offer.getOfferStatus() == OfferStatus.INACTIVE) {
@@ -79,10 +88,32 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
+    @Transactional
     public synchronized void removeFromWatched(Long taskId) {
         offerRepository.deleteById(taskId);
         taskManager.cancelTask(taskId);
         taskManager.removeTask(taskId);
+    }
+
+    private Offer createNewOffer(OfferRequest offerRequest, String userEmail) {
+        UserAccount userAccount = userAccountRepository.findByEmail(userEmail);
+
+        Offer offer = new Offer();
+        offer.setName(offerRequest.getName());
+        offer.setOfferStatus(OfferStatus.ACTIVE);
+        offer.setFrequency(offerRequest.getFrequency());
+        offer.setLink(offerRequest.getUrl());
+        offer.setUserAccount(userAccount);
+
+        return offer;
+    }
+
+    private Offer watchNew(Offer offer) {
+        Offer savedOffer = offerRepository.save(offer);
+        Task task = taskFactory.createTask(savedOffer);
+        taskManager.startTask(task);
+
+        return savedOffer;
     }
 
 }

@@ -1,6 +1,7 @@
 package com.radek.travelplanet.config;
 
 import com.radek.travelplanet.repository.OfferRepository;
+import com.radek.travelplanet.repository.UserAccountRepository;
 import com.radek.travelplanet.service.ApplicationStartEventListener;
 import com.radek.travelplanet.service.OfferService;
 import com.radek.travelplanet.service.OfferServiceImpl;
@@ -34,8 +35,8 @@ import java.util.concurrent.Executors;
 public class AppConfig {
 
     @Bean
-    public OfferService offerService(TaskFactory taskFactory, TaskManager taskManager, OfferRepository offerRepository) {
-        return new OfferServiceImpl(taskFactory, taskManager, offerRepository);
+    public OfferService offerService(TaskFactory taskFactory, TaskManager taskManager, OfferRepository offerRepository, UserAccountRepository userAccountRepository) {
+        return new OfferServiceImpl(taskFactory, taskManager, offerRepository, userAccountRepository);
     }
 
     @Bean

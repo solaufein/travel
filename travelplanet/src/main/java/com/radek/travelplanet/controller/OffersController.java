@@ -1,10 +1,6 @@
 package com.radek.travelplanet.controller;
 
 import com.radek.travelplanet.controller.model.OfferDTO;
-import com.radek.travelplanet.model.Offer;
-import com.radek.travelplanet.model.OfferStatus;
-import com.radek.travelplanet.model.UserAccount;
-import com.radek.travelplanet.repository.UserAccountRepository;
 import com.radek.travelplanet.service.OfferService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
-import java.util.HashSet;
 
 @RepositoryRestController
 @RequestMapping("/travel")
@@ -26,44 +21,23 @@ import java.util.HashSet;
 public class OffersController {
 
     private final OfferService offerService;
-    private final UserAccountRepository userAccountRepository;
 
     @Autowired
-    public OffersController(OfferService offerService, UserAccountRepository userAccountRepository) {
+    public OffersController(OfferService offerService) {
         this.offerService = offerService;
-        this.userAccountRepository = userAccountRepository;
     }
 
     @GetMapping("/offers")
     public ResponseEntity<?> getAllOffers(Pageable pageable, Principal principal) {
         Page<OfferDTO> offers = offerService.getAllOffers(principal.getName(), pageable);
+
         return ResponseEntity.ok(offers);
     }
 
     @PostMapping("/offers")
     public ResponseEntity<?> watchOffer(@RequestBody OfferRequest offerRequest, Principal principal) {
         log.info("Watch Offer request received for: {}", offerRequest.getUrl());
-
-        UserAccount userAccount = userAccountRepository.findByEmail(principal.getName());
-
-        Offer offer = new Offer();
-        offer.setName("Request offer");
-        offer.setOfferStatus(OfferStatus.ACTIVE);
-        offer.setFrequency("2");
-        offer.setOfferDetails(new HashSet<>());
-        offer.setLink(offerRequest.getUrl());
-        offer.setUserAccount(userAccount);
-
-        Offer offer2 = new Offer();
-        offer2.setName("Amc Royal Azur Resort");
-        offer2.setOfferStatus(OfferStatus.ACTIVE);
-        offer2.setFrequency("3");
-        offer2.setOfferDetails(new HashSet<>());
-        offer2.setLink("https://www.travelplanet.pl/wczasy/egipt/hurghada/hurghada/amc-royal--ex-amc-azur-resort,22042019VITX23176.html?box=super-last-minute");
-        offer2.setUserAccount(userAccount);
-
-        long id = offerService.watchNew(offer);
-        offerService.watchNew(offer2);
+        long id = offerService.watchNew(offerRequest, principal.getName());
 
         return ResponseEntity.ok(id);
     }

@@ -56,6 +56,8 @@ public class OffersControllerTest {
     public void shouldWatchOfferWithGivenUrl() throws Exception {
         OfferRequest offerRequest = new OfferRequest();
         offerRequest.setUrl("https://www.travelplanet.pl/wczasy/hiszpania/costa-del-sol/benalmadena/playa-bonita--benalmadena,28052018RNBW2591.html?box=hiszpania-last-minute");
+        offerRequest.setName("Wczasy Hiszpania Bonita");
+        offerRequest.setFrequency("1");
         String content = jsonOfferRequest.write(offerRequest).getJson();
 
         mvc.perform(post("/travel/offers").with(user("admin@gmail.com").password("admin").roles("ADMIN"))
