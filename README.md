@@ -1,7 +1,12 @@
-# Project Travel
+### Project Travel
+
+##### Supports
+- Travelplanet.pl
+- Wakacje.pl
+- Itaka.pl
 
 ##### Run app:
-- spring-boot:run
+- `mvn spring-boot:run`
 
 ##### Run app in debug mode:
--  spring-boot:run "-Drun.jvmArguments=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000"
+-  `mvn spring-boot:run "-Drun.jvmArguments=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000"`
