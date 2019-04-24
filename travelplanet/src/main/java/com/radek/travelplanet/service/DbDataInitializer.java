@@ -57,7 +57,7 @@ public class DbDataInitializer implements CommandLineRunner {
 
         Offer offer = new Offer();
         offer.setFrequency("4");
-        offer.setLink("https://www.itaka.pl/wczasy/tunezja/djerba/hotel-meninx-djerba,DJEMENI.html?ofr_id=937f3d2698cc55c95b1423bd5627ffd7d720b63a103dc445e2d2a2393b88984f");
+        offer.setLink("https://www.itaka.pl/wczasy/tunezja/djerba/hotel-zita-beach-resort-zarzis,DJEZITA.html?ofr_id=56e99ed144905eeef41c568573095cb932defbd00c7f56290a3201b108bd4fe3");
         offer.setName("ITAKA Shit Week");
         offer.setOfferStatus(OfferStatus.ACTIVE);
         offer.setUserAccount(admin);

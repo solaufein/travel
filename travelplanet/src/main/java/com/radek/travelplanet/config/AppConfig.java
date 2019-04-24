@@ -8,10 +8,7 @@ import com.radek.travelplanet.service.OfferServiceImpl;
 import com.radek.travelplanet.service.notify.MailNotificationService;
 import com.radek.travelplanet.service.notify.NotificationService;
 import com.radek.travelplanet.service.parser.ParserFactory;
-import com.radek.travelplanet.service.strategy.ItakaPriceStrategy;
-import com.radek.travelplanet.service.strategy.PriceStrategy;
-import com.radek.travelplanet.service.strategy.PriceStrategyRegistry;
-import com.radek.travelplanet.service.strategy.TravelplanetPriceStrategy;
+import com.radek.travelplanet.service.strategy.*;
 import com.radek.travelplanet.service.task.*;
 import com.radek.travelplanet.service.task.listener.OnFailureListener;
 import com.radek.travelplanet.service.task.listener.OnFailureListenerImpl;
@@ -47,6 +44,11 @@ public class AppConfig {
     @Bean
     public PriceStrategy itakaPriceStrategy(ParserFactory parserFactory) {
         return new ItakaPriceStrategy(parserFactory);
+    }
+
+    @Bean
+    public PriceStrategy wakacjePriceStrategy(ParserFactory parserFactory) {
+        return new WakacjePriceStrategy(parserFactory);
     }
 
     @Bean
